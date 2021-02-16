@@ -11,11 +11,22 @@ module.exports = {
     'prettier/@typescript-eslint',
   ],
   rules: {
-    'react/react-in-jsx-scope': 0,
+    'react/prop-types': 'off',
+    'react/react-in-jsx-scope': 'off',
     'react-hooks/exhaustive-deps': 'warn',
   },
   env: {
     browser: true,
     commonjs: true,
   },
+  overrides: [
+    {
+      files: ['*.tsx'],
+      rules: { '@typescript-eslint/explicit-module-boundary-types': 'off' },
+    },
+    {
+      files: ['*.js'],
+      rules: { '@typescript-eslint/no-var-requires': 'off' },
+    },
+  ],
 };
