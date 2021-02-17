@@ -1,35 +1,36 @@
-import { useJsApiLoader } from '@react-google-maps/api';
-import { ReactNode } from 'react';
+import { ReactNode, useCallback } from 'react';
 
 interface IMap {
   LoadingComponent: ReactNode;
-  onLoad?: (map: google.maps.Map) => void;
+  isLibraryLoaded: boolean;
+  libraryLoadError?: Error;
+  mapOptions: google.maps.MapOptions;
+  onMapSet: (map: google.maps.Map) => void;
 }
 
-const Map: React.FC<IMap> = ({ LoadingComponent }) => {
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GM_API_KEY,
-    preventGoogleFontsLoading: true,
-  });
+const Map: React.FC<IMap> = ({
+  LoadingComponent,
+  isLibraryLoaded,
+  libraryLoadError,
+  mapOptions,
+  onMapSet,
+}) => {
+  const setMap = useCallback((element: HTMLElement) => {
+    if (element) {
+      const map = new google.maps.Map(element, mapOptions);
+      onMapSet(map);
+    }
+  }, []);
 
-  function setMap(element: HTMLElement) {
-    console.log('element :>> ', element);
-
-    const map = new google.maps.Map(element, {
-      center: { lat: -34.397, lng: 150.644 },
-      zoom: 8,
-    });
-  }
-
-  if (loadError) {
+  if (libraryLoadError) {
     return (
-      <div className="w-full h-full flex justify-center content-center">
+      <div className="w-full h-full flex justify-center items-center">
         <span className="block">An error has occurred.</span>
       </div>
     );
   }
 
-  if (!isLoaded) {
+  if (!isLibraryLoaded) {
     return <>{LoadingComponent}</>;
   }
 
