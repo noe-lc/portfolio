@@ -1,0 +1,43 @@
+.container {
+  @apply absolute w-auto h-full;
+  left: 100%;
+  top: 0;
+}
+
+.sidebar {
+  @apply relative 
+    w-80
+    sm:w-96
+    max-w-xs 
+    sm:max-w-sm 
+    lg:max-w-md 
+    rounded-lg 
+    rounded-r-none
+    shadow-md
+    bg-gray-50 
+    transition-spacing duration-500 ease-in ml-0;
+  height: 90%;
+  min-height: 24rem;
+  max-height: 90%;
+  top: 5%;
+}
+
+.sidebar--expanded {
+  @apply transition-spacing duration-300 ease-out sm:-ml-96 -ml-80;
+}
+
+.topbar {
+  @apply flex
+  justify-end
+  p-1
+  rounded-tl-lg
+  bg-gray-700;
+}
+
+.topbar-icon {
+  @apply text-xl text-gray-100 cursor-pointer;
+}
+
+.content {
+  @apply p-3 pt-0;
+}

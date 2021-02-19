@@ -46,10 +46,10 @@ module.exports = {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
         serif: ['Lora', ...defaultTheme.fontFamily.serif],
       },
+      transitionProperty: {
+        margin: 'margin',
+        spacing: 'margin, padding',
+      },
     },
   },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
 };
