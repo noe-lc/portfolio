@@ -1,24 +1,48 @@
-import React, { useState } from 'react';
+import React, { ReactElement, ReactNode, useState } from 'react';
 import { AiOutlinePushpin } from 'react-icons/ai';
 
+import joinClasses from '~/utils/joinClasses';
 import SidebarTabs from './SidebarTabs';
-import joinClasses from '../../../utils/joinClasses';
+import SidebarContent from './SidebarContent';
 import classes from './Sidebar.module.css';
 
-const Sidebar: React.FC<P> = props => {
-  let tabs: React.ReactNode = null;
-  let content: React.ReactNode = null;
+export type ISideBarValue = string | number;
+
+interface ISidebar {
+  value: ISideBarValue;
+}
+
+const Sidebar: React.FC<ISidebar> = props => {
+  const { tabs, content } = getTabsAndContent(props.children as ReactNode);
+
   const [isExpanded, setIsExpanded] = useState(true);
 
   const sidebarCls = isExpanded ? 'sidebar sidebar--expanded' : 'sidebar';
 
-  React.Children.forEach(props.children, child => {
-    tabs = child.type === SidebarTabs && child;
-    content = child.type !== SidebarTabs && child;
-  });
-
   function toggle() {
     setIsExpanded(!isExpanded);
+  }
+
+  function getTabsAndContent(children: ReactNode) {
+    const noOfChildren = React.Children.count(children);
+
+    if (noOfChildren === 1 || noOfChildren > 2) {
+      return { tabs: null, content: children };
+    }
+
+    let tabs: ReactElement = null;
+    let content: ReactElement = null;
+    React.Children.forEach(children as ReactElement, child => {
+      const { type } = child;
+      tabs = tabs || (type === SidebarTabs && injectValue(child));
+      content = content || (type === SidebarContent && injectValue(child));
+    });
+
+    return { tabs, content };
+  }
+
+  function injectValue(child: ReactElement) {
+    return React.cloneElement(child, { ...child.props, value: props.value });
   }
 
   return (
@@ -31,7 +55,9 @@ const Sidebar: React.FC<P> = props => {
         <div className={classes.topbar}>
           <AiOutlinePushpin className={classes['topbar-icon']} />
         </div>
-        <div className={classes.content}></div>
+        <div className={classes.content}>
+          {injectValue(content as ReactElement)}
+        </div>
       </aside>
     </div>
   );

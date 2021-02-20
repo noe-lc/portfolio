@@ -1,4 +1,4 @@
-import { ReactNode, useCallback } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 
 interface IMap {
   LoadingComponent: ReactNode;
@@ -31,7 +31,7 @@ const Map: React.FC<IMap> = ({
   }
 
   if (!isLibraryLoaded) {
-    return <>{LoadingComponent}</>;
+    return <React.Fragment>{LoadingComponent}</React.Fragment>;
   }
 
   return <div ref={setMap} id="map" className="w-full h-full" />;

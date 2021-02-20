@@ -1,11 +1,15 @@
 import { useState } from 'react';
+import { AiFillAccountBook } from 'react-icons/ai';
 
-import Map from '../../../src/components/atoms/map';
-import Sidebar from '../../../src/components/atoms/sidebar';
-import SidebarTabs from '../../../src/components/atoms/sidebar/SidebarTabs';
+import Map from '~components/atoms/map';
+import Sidebar, {
+  SidebarTabs,
+  SidebarContent,
+  SidebarTab,
+} from '~components/atoms/sidebar';
 import withGoogleMaps, {
   LoadScriptReturn,
-} from '../../../src/components/hocs/with-google-maps';
+} from '~components/hocs/with-google-maps';
 
 const DEFAULT_MAP_OPTIONS: google.maps.MapOptions = {
   center: { lat: -34.397, lng: 150.644 },
@@ -17,6 +21,7 @@ const DEFAULT_MAP_OPTIONS: google.maps.MapOptions = {
 
 function Gis<P extends LoadScriptReturn>(props: P) {
   const [map, setMap] = useState(null);
+  const [activeTab, setActiveTab] = useState(null);
 
   const onMapSet = map => {
     setMap(map);
@@ -34,11 +39,16 @@ function Gis<P extends LoadScriptReturn>(props: P) {
             onMapSet={onMapSet}
           />
         </div>
-        <p className="absolute right-0">Paragraph</p>
-        <Sidebar>
-          <SidebarTabs>
-            <p>paragraph</p>
+
+        <Sidebar value={activeTab}>
+          <SidebarTabs onTabSelect={setActiveTab}>
+            <SidebarTab
+              isActive
+              value="first"
+              Icon={<AiFillAccountBook className="inline" />}
+            />
           </SidebarTabs>
+          <SidebarContent>Hello wrld</SidebarContent>
         </Sidebar>
       </main>
     </div>
