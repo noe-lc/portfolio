@@ -6,6 +6,7 @@ import Sidebar, {
   SidebarTabs,
   SidebarContent,
   SidebarTab,
+  SidebarPanel,
 } from '~components/atoms/sidebar';
 import withGoogleMaps, {
   LoadScriptReturn,
@@ -39,16 +40,20 @@ function Gis<P extends LoadScriptReturn>(props: P) {
             onMapSet={onMapSet}
           />
         </div>
-
-        <Sidebar value={activeTab}>
-          <SidebarTabs onTabSelect={setActiveTab}>
+        <Sidebar value={activeTab} onTabSelect={setActiveTab}>
+          <SidebarTabs>
             <SidebarTab
-              isActive
               value="first"
               Icon={<AiFillAccountBook className="inline" />}
             />
+            <SidebarTab
+              value="second"
+              Icon={<AiFillAccountBook className="inline" />}
+            />
           </SidebarTabs>
-          <SidebarContent>Hello wrld</SidebarContent>
+          <SidebarContent>
+            <SidebarPanel value="first">Hello world</SidebarPanel>
+          </SidebarContent>
         </Sidebar>
       </main>
     </div>

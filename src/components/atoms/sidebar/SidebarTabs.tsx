@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 
 import { ISideBarValue } from './Sidebar';
 
-export type OnTabSelect = (value: ISideBarValue, e: MouseEvent) => void;
+export type OnTabSelect = (value: ISideBarValue, e?: MouseEvent) => void;
 
 interface ISidebarTabs {
   value?: ISideBarValue;

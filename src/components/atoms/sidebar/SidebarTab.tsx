@@ -3,7 +3,7 @@ import { OnTabSelect } from './SidebarTabs';
 
 interface ISidebarTab {
   value: ISideBarValue;
-  isActive: boolean;
+  isActive?: boolean;
   label?: string;
   Icon: React.ReactNode;
   onClick?: OnTabSelect;
@@ -15,7 +15,7 @@ const SidebarTab: React.FC<ISidebarTab> = props => {
     : 'bg-gray-500 text-white bg-opacity-90';
 
   function onClick(e) {
-    props.onClick(props.value, e);
+    props.onClick && props.onClick(props.value, e);
   }
 
   return (
