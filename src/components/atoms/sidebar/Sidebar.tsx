@@ -103,7 +103,7 @@ const Sidebar: React.FC<ISidebar> = props => {
         <div className={classes.topbar}>
           <AiOutlinePushpin className={classes['topbar-icon']} />
         </div>
-        <div className={classes.content}>{content}</div>
+        {content}
       </aside>
     </div>
   );

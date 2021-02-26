@@ -6,12 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "postinstall": "link-module-alias"
+    "preinstall": "npm list link-module-alias && link-module-alias clean || true",
+    "preuninstall": "npm list link-module-alias && link-module-alias clean || true",
+    "preversion": "npm list link-module-alias && link-module-alias clean || true",
+    "postinstall": "link-module-alias",
+    "postuninstall": "link-module-alias",
+    "postversion": "link-module-alias"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.1.1",
     "autoprefixer": "^10.2.4",
-    "mobx-state-tree": "^5.0.1",
+    "mobx": "^6.1.7",
+    "mobx-react-lite": "^3.2.0",
     "next": "10.0.6",
     "postcss": "^8.2.6",
     "postcss-nested": "^5.0.3",

@@ -1,0 +1,7 @@
+.toolbar {
+  @apply flex justify-end p-2 bg-cream-lighter;
+
+  > svg {
+    @apply mx-1 w-5 h-5;
+  }
+}

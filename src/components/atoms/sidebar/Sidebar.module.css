@@ -37,7 +37,3 @@
 .topbar-icon {
   @apply text-xl text-gray-100 cursor-pointer;
 }
-
-.content {
-  @apply p-3 pt-0;
-}

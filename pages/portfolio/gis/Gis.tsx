@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AiFillAccountBook } from 'react-icons/ai';
+import { IoLayersOutline } from 'react-icons/io5';
 
 import Map from '~components/atoms/map';
 import Sidebar, {
@@ -11,6 +11,7 @@ import Sidebar, {
 import withGoogleMaps, {
   LoadScriptReturn,
 } from '~components/hocs/with-google-maps';
+import LayerManager from '~components/organisms/layer-manager';
 
 const DEFAULT_MAP_OPTIONS: google.maps.MapOptions = {
   center: { lat: -34.397, lng: 150.644 },
@@ -44,15 +45,17 @@ function Gis<P extends LoadScriptReturn>(props: P) {
           <SidebarTabs>
             <SidebarTab
               value="first"
-              Icon={<AiFillAccountBook className="inline" />}
+              Icon={<IoLayersOutline className="inline" />}
             />
             <SidebarTab
               value="second"
-              Icon={<AiFillAccountBook className="inline" />}
+              Icon={<IoLayersOutline className="inline" />}
             />
           </SidebarTabs>
           <SidebarContent>
-            <SidebarPanel value="first">Hello world</SidebarPanel>
+            <SidebarPanel value="first">
+              <LayerManager layers={[]} />
+            </SidebarPanel>
           </SidebarContent>
         </Sidebar>
       </main>
