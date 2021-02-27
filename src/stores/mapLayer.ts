@@ -1,4 +1,5 @@
 import { makeObservable, observable } from 'mobx';
+import { v4 as uuidv4 } from 'uuid';
 
 export enum LayerZoomRange {
   min = 0,
@@ -19,6 +20,7 @@ const DEFAULT_OPTIONS = {
 };
 
 class MapLayer {
+  public id: string;
   public name: string;
   public zoomRange: [number, number];
   public data: google.maps.Data;
@@ -31,8 +33,9 @@ class MapLayer {
 
     const layerOptions = { ...DEFAULT_OPTIONS, ...options };
 
-    this.data = new google.maps.Data(layerOptions);
+    this.id = options.id || uuidv4();
     this.name = options.name;
+    this.data = new google.maps.Data(layerOptions);
     this.zoomRange = layerOptions.zoomRange as ILayerOptions['zoomRange'];
   }
 }

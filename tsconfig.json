@@ -14,7 +14,15 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "noImplicitAny": false,
-    "types": ["google.maps"]
+    "types": ["google.maps"],
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"],
+      "~root/*": ["./*"],
+      "~components/*": ["src/components/*"],
+      "~types/*": ["src/types/*"],
+      "~utils/*": ["src/utils/*"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

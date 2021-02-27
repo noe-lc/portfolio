@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { IoLayersOutline } from 'react-icons/io5';
 
 import MapStore from '~/stores/map';
-import MapLayer from '~/stores/mapLayer';
 import Map from '~components/atoms/map';
 import Sidebar, {
   SidebarTabs,
@@ -16,7 +15,7 @@ import withGoogleMaps, {
 import LayerManager from '~components/organisms/layer-manager';
 
 function Gis<P extends LoadScriptReturn>(props: P) {
-  const [mapStore, setMapStore] = useState(null);
+  const [mapStore, setMapStore] = useState<MapStore>(null);
   const [activeTab, setActiveTab] = useState(null);
 
   const onMapSet = map => {
@@ -27,9 +26,14 @@ function Gis<P extends LoadScriptReturn>(props: P) {
     setMapStore(store);
   };
 
+  const remove = () => {
+    mapStore.removeLayer(mapStore.layers[0].id);
+  };
+
   return (
     <div className="w-screen h-screen overflow-hidden">
       <main className="w-full h-full relative">
+        <button onClick={remove}>Remove</button>
         <div className="w-full h-full">
           <Map
             LoadingComponent="Loading..."

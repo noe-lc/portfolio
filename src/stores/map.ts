@@ -12,9 +12,9 @@ const DEFAULT_OPTIONS = {
   layers: [],
 };
 
-class Map implements MapStore {
-  map;
-  layers;
+class Map {
+  public map: google.maps.Map;
+  public layers: MapLayer[];
 
   constructor(map: google.maps.Map, options?: IMapConfig) {
     makeObservable(this, {
@@ -47,6 +47,22 @@ class Map implements MapStore {
     layer = layer || (nameOrLayer as MapLayer);
     this.layers.push(layer);
     return layer;
+  }
+
+  removeLayer(idOrLayer: string | MapLayer): void {
+    let index: number;
+
+    if (typeof idOrLayer === 'string') {
+      index = this.layers.findIndex(layer => layer.id === idOrLayer);
+    } else {
+      index = this.layers.findIndex(layer => layer === idOrLayer);
+    }
+
+    if (index === -1) return;
+
+    const layer = this.layers[index];
+    layer.data.setMap(null);
+    this.layers.splice(index, 1);
   }
 }
 
