@@ -1,21 +1,36 @@
 import { makeObservable, observable } from 'mobx';
 
-interface ILayerConfig extends google.maps.Data.DataOptions {
-  name: string;
-  zoomRange: [number, number];
+export enum LayerZoomRange {
+  min = 0,
+  max = 22,
 }
+
+export interface ILayerOptions {
+  id?: string;
+  name?: string;
+  zoomRange?: [number, number];
+}
+
+export type IFullLayerOptions = ILayerOptions & google.maps.Data.DataOptions;
+
+const DEFAULT_OPTIONS = {
+  zoomRange: [LayerZoomRange.min, LayerZoomRange.max],
+};
 
 class MapLayer extends google.maps.Data {
   public name: string;
   public zoomRange: [number, number];
 
-  constructor(config: ILayerConfig) {
-    super(config);
+  constructor(options: IFullLayerOptions) {
+    super(options);
     makeObservable(this, {
       zoomRange: observable,
     });
-    this.name = config.name;
-    this.zoomRange = config.zoomRange;
+
+    const layerOptions = { ...DEFAULT_OPTIONS, ...options };
+
+    this.name = options.name;
+    this.zoomRange = layerOptions.zoomRange as [number, number];
   }
 }
 

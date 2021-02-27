@@ -16,10 +16,13 @@ const Map: React.FC<IMap> = ({
   onMapSet,
 }) => {
   const setMap = useCallback((element: HTMLElement) => {
-    if (element) {
-      const map = new google.maps.Map(element, mapOptions);
-      onMapSet(map);
+    if (!element) {
+      return;
     }
+
+    const map = new google.maps.Map(element, mapOptions);
+    onMapSet(map);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (libraryLoadError) {

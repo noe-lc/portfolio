@@ -1,4 +1,4 @@
-const extractClasses = (
+const joinClasses = (
   classes: Record<string, string>,
   names: string
 ): string => {
@@ -12,4 +12,4 @@ const extractClasses = (
   return classNames;
 };
 
-export default extractClasses;
+export default joinClasses;

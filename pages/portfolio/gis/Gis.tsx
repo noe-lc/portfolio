@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { IoLayersOutline } from 'react-icons/io5';
 
+import MapStore from '~/stores/map';
 import Map from '~components/atoms/map';
 import Sidebar, {
   SidebarTabs,
@@ -13,7 +14,7 @@ import withGoogleMaps, {
 } from '~components/hocs/with-google-maps';
 import LayerManager from '~components/organisms/layer-manager';
 
-const DEFAULT_MAP_OPTIONS: google.maps.MapOptions = {
+const DEFAULT_MAP_OPTIONS = {
   center: { lat: -34.397, lng: 150.644 },
   zoom: 8,
   disableDoubleClickZoom: true,
@@ -22,11 +23,12 @@ const DEFAULT_MAP_OPTIONS: google.maps.MapOptions = {
 };
 
 function Gis<P extends LoadScriptReturn>(props: P) {
-  const [map, setMap] = useState(null);
+  const [mapStore, setMapStore] = useState(null);
   const [activeTab, setActiveTab] = useState(null);
 
   const onMapSet = map => {
-    setMap(map);
+    const store = new MapStore(map);
+    setMapStore(store);
   };
 
   return (

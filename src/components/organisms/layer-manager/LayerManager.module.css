@@ -5,3 +5,7 @@
     @apply mx-1 w-5 h-5;
   }
 }
+
+.content {
+  @apply p-2;
+}

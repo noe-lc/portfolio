@@ -23,6 +23,12 @@ interface ISidebar {
 const Sidebar: React.FC<ISidebar> = props => {
   const sidebarEl = useRef<HTMLElement>(null);
   const expandTimeout = useRef<number>(null);
+  const listenerCallbacks = useRef({
+    mouseOver: () => clearTimeout(expandTimeout.current),
+    mouseOut: () => {
+      expandTimeout.current = window.setTimeout(() => setExpand(false), 7500);
+    },
+  });
 
   const [expand, setExpand] = useState(!!props.expand);
   const [pinned, setPinned] = useState(false);
@@ -34,30 +40,46 @@ const Sidebar: React.FC<ISidebar> = props => {
     sidebarEl.current = e;
   }, []);
 
+  function onPin() {
+    const shouldPin = !pinned;
+
+    if (shouldPin) {
+      setPinned(true);
+      setListeners(false);
+      clearTimeout(expandTimeout.current);
+      return;
+    }
+    setListeners(true);
+  }
+
   function onTabSelect(value) {
     props.onTabSelect(value);
     setExpand(true);
   }
 
-  function handleExpand(value) {
+  function setListeners(set: boolean) {
     const { current: sidebar } = sidebarEl;
+    const { current: callbacks } = listenerCallbacks;
 
-    const handleMouseOver = () => clearTimeout(expandTimeout.current);
-    const handleMouseOut = () => {
-      expandTimeout.current = window.setTimeout(() => setExpand(false), 7500);
-    };
-
-    if (!value) {
-      sidebar.removeEventListener('mouseout', handleMouseOut);
-      sidebar.removeEventListener('mouseover', handleMouseOver);
-      setExpand(false);
+    if (set) {
+      sidebar.addEventListener('mouseout', callbacks.mouseOut);
+      sidebar.addEventListener('mouseover', callbacks.mouseOver);
       return;
     }
 
+    sidebar.removeEventListener('mouseout', callbacks.mouseOut);
+    sidebar.removeEventListener('mouseover', callbacks.mouseOver);
+  }
+
+  function handleExpand(value) {
+    if (!value) {
+      setListeners(false);
+      setExpand(false);
+      return;
+    }
     setExpand(true);
+    setListeners(true);
     clearTimeout(expandTimeout.current);
-    sidebar.onmouseout = handleMouseOut;
-    sidebar.onmouseover = handleMouseOver;
   }
 
   function getTabsAndContent(children: ReactElement) {
@@ -89,6 +111,7 @@ const Sidebar: React.FC<ISidebar> = props => {
 
   useEffect(() => {
     handleExpand(props.value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.value]);
 
   useEffect(() => () => clearTimeout(expandTimeout.current));
@@ -101,7 +124,13 @@ const Sidebar: React.FC<ISidebar> = props => {
       >
         {tabs}
         <div className={classes.topbar}>
-          <AiOutlinePushpin className={classes['topbar-icon']} />
+          <AiOutlinePushpin
+            className={joinClasses(
+              classes,
+              pinned ? 'topbar-icon topbar-icon--pinned' : 'topbar-icon'
+            )}
+            onClick={onPin}
+          />
         </div>
         {content}
       </aside>

@@ -37,3 +37,7 @@
 .topbar-icon {
   @apply text-xl text-gray-100 cursor-pointer;
 }
+
+.topbar-icon--pinned {
+  @apply transform -rotate-45;
+}
