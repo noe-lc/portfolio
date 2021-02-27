@@ -4,9 +4,17 @@ interface IMap {
   LoadingComponent: ReactNode;
   isLibraryLoaded: boolean;
   libraryLoadError?: Error;
-  mapOptions: google.maps.MapOptions;
+  mapOptions?: google.maps.MapOptions;
   onMapSet: (map: google.maps.Map) => void;
 }
+
+const DEFAULT_MAP_OPTIONS = {
+  center: { lat: -34.397, lng: 150.644 },
+  zoom: 8,
+  disableDoubleClickZoom: true,
+  fullscreenControl: false,
+  streetViewControl: false,
+};
 
 const Map: React.FC<IMap> = ({
   LoadingComponent,
@@ -20,7 +28,8 @@ const Map: React.FC<IMap> = ({
       return;
     }
 
-    const map = new google.maps.Map(element, mapOptions);
+    const options = { ...DEFAULT_MAP_OPTIONS, ...mapOptions };
+    const map = new google.maps.Map(element, options);
     onMapSet(map);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

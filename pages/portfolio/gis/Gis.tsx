@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { IoLayersOutline } from 'react-icons/io5';
 
 import MapStore from '~/stores/map';
+import MapLayer from '~/stores/mapLayer';
 import Map from '~components/atoms/map';
 import Sidebar, {
   SidebarTabs,
@@ -14,20 +15,15 @@ import withGoogleMaps, {
 } from '~components/hocs/with-google-maps';
 import LayerManager from '~components/organisms/layer-manager';
 
-const DEFAULT_MAP_OPTIONS = {
-  center: { lat: -34.397, lng: 150.644 },
-  zoom: 8,
-  disableDoubleClickZoom: true,
-  fullscreenControl: false,
-  streetViewControl: false,
-};
-
 function Gis<P extends LoadScriptReturn>(props: P) {
   const [mapStore, setMapStore] = useState(null);
   const [activeTab, setActiveTab] = useState(null);
 
   const onMapSet = map => {
     const store = new MapStore(map);
+    const sample = store.addLayer('sample');
+    sample.data.loadGeoJson('/110m_countries.geojson');
+
     setMapStore(store);
   };
 
@@ -39,7 +35,6 @@ function Gis<P extends LoadScriptReturn>(props: P) {
             LoadingComponent="Loading..."
             isLibraryLoaded={props.isLoaded}
             libraryLoadError={props.loadError}
-            mapOptions={DEFAULT_MAP_OPTIONS}
             onMapSet={onMapSet}
           />
         </div>

@@ -12,11 +12,11 @@ const DEFAULT_OPTIONS = {
   layers: [],
 };
 
-class Map {
-  public map: google.maps.Map;
-  public layers: MapLayer[];
+class Map implements MapStore {
+  map;
+  layers;
 
-  constructor(map: google.maps.Map, options: IMapConfig) {
+  constructor(map: google.maps.Map, options?: IMapConfig) {
     makeObservable(this, {
       layers: observable.shallow,
     });
@@ -27,8 +27,9 @@ class Map {
     this.layers = storeOptions.layers;
   }
 
-  public addLayer(layer: MapLayer): MapLayer;
-  public addLayer(
+  addLayer(layer: MapLayer): MapLayer;
+  addLayer(name: string, options?: MapLayerOptions): MapLayer;
+  addLayer(
     nameOrLayer: string | MapLayer,
     options?: MapLayerOptions
   ): MapLayer {
