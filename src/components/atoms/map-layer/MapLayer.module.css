@@ -1,0 +1,11 @@
+.container {
+  @apply flex w-full p-2;
+}
+
+.control {
+  @apply p-1;
+}
+
+.control-visibility {
+  @apply flex justify-center content-center;
+}

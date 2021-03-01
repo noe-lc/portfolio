@@ -129,6 +129,7 @@ const Sidebar: React.FC<ISidebar> = props => {
               classes,
               pinned ? 'topbar-icon topbar-icon--pinned' : 'topbar-icon'
             )}
+            title="Pin sidebar"
             onClick={onPin}
           />
         </div>

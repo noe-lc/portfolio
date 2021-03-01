@@ -10,25 +10,29 @@ export interface ILayerOptions {
   id?: string;
   name?: string;
   zoomRange?: [number, number];
+  visible: boolean;
 }
 
 export type IFullLayerOptions = ILayerOptions & google.maps.Data.DataOptions;
 
-const DEFAULT_OPTIONS = {
+const DEFAULT_OPTIONS: ILayerOptions = {
   name: 'New Layer',
   zoomRange: [LayerZoomRange.min, LayerZoomRange.max],
+  visible: true,
 };
 
 class MapLayer {
   public id: string;
   public name: string;
   public zoomRange: [number, number];
+  public visible: boolean;
   public data: google.maps.Data;
 
   constructor(options: IFullLayerOptions) {
     makeObservable(this, {
       name: observable,
       zoomRange: observable,
+      visible: observable,
     });
 
     const layerOptions = { ...DEFAULT_OPTIONS, ...options };

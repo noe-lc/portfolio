@@ -33,7 +33,6 @@ function Gis<P extends LoadScriptReturn>(props: P) {
   return (
     <div className="w-screen h-screen overflow-hidden">
       <main className="w-full h-full relative">
-        <button onClick={remove}>Remove</button>
         <div className="w-full h-full">
           <Map
             LoadingComponent="Loading..."
@@ -55,7 +54,7 @@ function Gis<P extends LoadScriptReturn>(props: P) {
           </SidebarTabs>
           <SidebarContent>
             <SidebarPanel value="first">
-              <LayerManager layers={[]} />
+              {mapStore && <LayerManager layers={mapStore.layers || []} />}
             </SidebarPanel>
           </SidebarContent>
         </Sidebar>

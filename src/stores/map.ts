@@ -30,7 +30,7 @@ class Map {
   addLayer(layer: MapLayer): MapLayer;
   addLayer(name: string, options?: MapLayerOptions): MapLayer;
   addLayer(
-    nameOrLayer: string | MapLayer,
+    nameOrLayer: string | MapLayer | null,
     options?: MapLayerOptions
   ): MapLayer {
     let layer: MapLayer;
