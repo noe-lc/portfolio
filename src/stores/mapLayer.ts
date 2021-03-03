@@ -45,12 +45,12 @@ class MapLayer {
     this.id = options.id || uuidv4();
     this.name = options.name;
     this.zoomRange = layerOptions.zoomRange as ILayerOptions['zoomRange'];
+    this.visible = !!layerOptions.visible;
     this.style = layerOptions.style || {};
 
     this.data.setStyle(this.style);
   }
 
-  public toggleVisibility(): void;
   public toggleVisibility(): void {
     const style = this.data.getStyle();
     const nextVisible = !this.visible;

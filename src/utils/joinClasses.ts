@@ -1,10 +1,10 @@
 const joinClasses = (
   classes: Record<string, string>,
-  names: string
+  classList: string
 ): string => {
   let className;
   let classNames = '';
-  names.split(' ').forEach(name => {
+  classList.split(' ').forEach(name => {
     className = classes[name];
     classNames += className ? ` ${classes[name]}` : '';
   });

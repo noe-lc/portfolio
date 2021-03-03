@@ -7,9 +7,14 @@
 }
 
 .control-visibility {
-  @apply flex justify-center items-center;
+  @apply flex justify-between items-center;
 
-  > input {
-    @apply w-4 h-4;
+  > input,
+  svg {
+    @apply w-4 h-4 mr-2;
   }
+}
+
+.collapse-symbol {
+  @apply transform -rotate-90 cursor-pointer;
 }

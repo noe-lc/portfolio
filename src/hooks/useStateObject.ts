@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-type A = <T extends Record<string, unknown>>(
+type IUseStateObject = <T extends Record<string, unknown>>(
   initialState: T
 ) => [T, <K extends keyof T>(key: keyof T | T, value?: T[K]) => void];
 
-const useStateObject: A = initialState => {
+const useStateObject: IUseStateObject = initialState => {
   const [state, setState] = useState(initialState);
 
   function updateState(key, value) {

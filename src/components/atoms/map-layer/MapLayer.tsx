@@ -1,17 +1,25 @@
-import joinClasses from '~/utils/joinClasses';
+import { useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { GrDown } from 'react-icons/gr';
+
 import MapLayerStore from '~/stores/mapLayer';
+import useModuleClasses from '~/hooks/useModuleClasses';
 
 import classes from './MapLayer.module.css';
-import { observer } from 'mobx-react-lite';
 
 interface IMapLayer {
   store: MapLayerStore;
 }
 
 const MapLayer: React.FC<IMapLayer> = ({ store }) => {
+  const joinClasses = useModuleClasses(classes);
+
+  const [showSymbol, setShowSymbol] = useState(false);
+
   return (
     <div className={classes.container}>
-      <div className={joinClasses(classes, 'control control-visibility')}>
+      <div className={joinClasses('control control-visibility')}>
+        <GrDown className={joinClasses('collapse-symbol')} />
         <input
           checked={store.visible}
           type="checkbox"
