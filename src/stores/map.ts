@@ -58,7 +58,9 @@ class Map {
       index = this.layers.findIndex(layer => layer === idOrLayer);
     }
 
-    if (index === -1) return;
+    if (index === -1) {
+      return;
+    }
 
     const layer = this.layers[index];
     layer.data.setMap(null);
