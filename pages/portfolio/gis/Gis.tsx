@@ -21,13 +21,9 @@ function Gis<P extends LoadScriptReturn>(props: P) {
   const onMapSet = map => {
     const store = new MapStore(map);
     const sample = store.addLayer('sample');
-    sample.data.loadGeoJson('/110m_countries.geojson');
+    sample.loadData('/110m_countries.geojson');
 
     setMapStore(store);
-  };
-
-  const remove = () => {
-    mapStore.removeLayer(mapStore.layers[0].id);
   };
 
   return (

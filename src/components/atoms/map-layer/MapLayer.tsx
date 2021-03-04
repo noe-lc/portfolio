@@ -16,10 +16,19 @@ const MapLayer: React.FC<IMapLayer> = ({ store }) => {
 
   const [showSymbol, setShowSymbol] = useState(false);
 
+  function toggleShowSymbol() {
+    setShowSymbol(!showSymbol);
+  }
+
   return (
     <div className={classes.container}>
       <div className={joinClasses('control control-visibility')}>
-        <GrDown className={joinClasses('collapse-symbol')} />
+        <GrDown
+          className={joinClasses(
+            `collapse-symbol ${showSymbol ? 'collapse-symbol--expanded' : ''}`
+          )}
+          onClick={toggleShowSymbol}
+        />
         <input
           checked={store.visible}
           type="checkbox"

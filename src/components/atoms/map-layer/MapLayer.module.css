@@ -16,5 +16,9 @@
 }
 
 .collapse-symbol {
-  @apply transform -rotate-90 cursor-pointer;
+  @apply transition-transform transform -rotate-90 cursor-pointer;
+}
+
+.collapse-symbol--expanded {
+  @apply transition-transform rotate-0;
 }

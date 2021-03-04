@@ -15,6 +15,9 @@ export interface ILayerOptions {
 
 export type IFullLayerOptions = ILayerOptions & google.maps.Data.DataOptions;
 
+//TODO: relocate this type
+type GeometryType = 'Point' | 'LineString' | 'Polygon';
+
 const DEFAULT_OPTIONS: ILayerOptions = {
   name: 'New Layer',
   zoomRange: [LayerZoomRange.min, LayerZoomRange.max],
@@ -23,7 +26,9 @@ const DEFAULT_OPTIONS: ILayerOptions = {
 
 class MapLayer {
   public data: google.maps.Data;
+  public geometryType: GeometryType;
   public id: string;
+  public idProperty: string | number;
   public name: string;
   public zoomRange: [number, number];
   public visible: boolean;
@@ -51,7 +56,31 @@ class MapLayer {
     this.data.setStyle(this.style);
   }
 
-  public toggleVisibility(): void {
+  loadData(
+    url: string,
+    options?: google.maps.Data.GeoJsonOptions,
+    callback?: (features: google.maps.Data.Feature[]) => void
+  ) {
+    this.idProperty = options?.idPropertyName;
+
+    this.data.loadGeoJson(url, options, features => {
+      const [feature] = features;
+      const id = feature.getId();
+      this.geometryType = feature.getGeometry().getType() as GeometryType;
+
+      if (!this.idProperty) {
+        feature.forEachProperty((name, value) => {
+          if (value === id) {
+            this.idProperty = name;
+          }
+        });
+      }
+
+      callback && callback(features);
+    });
+  }
+
+  toggleVisibility(): void {
     const style = this.data.getStyle();
     const nextVisible = !this.visible;
 
