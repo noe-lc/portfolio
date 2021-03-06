@@ -15,6 +15,10 @@
   }
 }
 
+.layer-name {
+  @apply block;
+}
+
 .collapse-symbol {
   @apply transition-transform transform -rotate-90 cursor-pointer;
 }

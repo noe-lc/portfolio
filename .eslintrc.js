@@ -22,7 +22,7 @@ module.exports = {
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
-      rules: { '@typescript-eslint/explicit-module-boundary-types': 'off' },
+      rules: { '@typescript-eslint/explicit-module-boundary-types': 'on' },
     },
     {
       files: ['*.js'],

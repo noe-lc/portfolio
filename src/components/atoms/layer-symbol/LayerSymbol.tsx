@@ -1,6 +1,4 @@
-interface ILayerSymbol {
-  store: any;
-}
+interface ILayerSymbol {}
 
 interface Symbol {}
 

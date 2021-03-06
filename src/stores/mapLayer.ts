@@ -1,6 +1,8 @@
 import { action, makeObservable, observable } from 'mobx';
 import { v4 as uuidv4 } from 'uuid';
 
+import { GeometryType } from '~/types/gis';
+
 export enum LayerZoomRange {
   min = 0,
   max = 22,
@@ -16,7 +18,6 @@ export interface ILayerOptions {
 export type IFullLayerOptions = ILayerOptions & google.maps.Data.DataOptions;
 
 //TODO: relocate this type
-type GeometryType = 'Point' | 'LineString' | 'Polygon';
 
 const DEFAULT_OPTIONS: ILayerOptions = {
   name: 'New Layer',
@@ -25,16 +26,14 @@ const DEFAULT_OPTIONS: ILayerOptions = {
 };
 
 class MapLayer {
-  public data: google.maps.Data;
-  public geometryType: GeometryType;
-  public id: string;
-  public idProperty: string | number;
-  public name: string;
-  public zoomRange: [number, number];
-  public visible: boolean;
-  public style:
-    | google.maps.Data.StyleOptions
-    | google.maps.Data.StylingFunction;
+  data: google.maps.Data;
+  geometryType: GeometryType;
+  id: string;
+  idProperty: string | number;
+  name: string;
+  zoomRange: [number, number];
+  visible: boolean;
+  style: google.maps.Data.StyleOptions;
 
   constructor(options: IFullLayerOptions) {
     makeObservable(this, {
