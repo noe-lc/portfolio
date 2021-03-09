@@ -1,14 +1,25 @@
 import { GeometryType } from '~/types/gis';
+import MapLayer from './mapLayer';
 
-enum SymbolTypes {
+export enum SymbolTypes {
+  single = 'single',
   nominal = 'nominal',
   classified = 'classified',
 }
 
-interface NominalSymbol {
+interface Nominal {
   type: string;
   field: string;
   colorScheme: any;
+}
+
+export interface PolygonSymbol {
+  type: SymbolTypes;
+  fillColor: string;
+  fillOpacity: number;
+  strokeColor: string;
+  strokeOpacity: number;
+  strokeWeight: number;
 }
 
 const ALLOWED_SYMBOL_TYPES: Record<GeometryType, SymbolTypes[]> = {
@@ -18,12 +29,12 @@ const ALLOWED_SYMBOL_TYPES: Record<GeometryType, SymbolTypes[]> = {
 };
 
 class LayerSymbol {
-  readonly geometry: GeometryType;
+  private geometry: GeometryType;
   readonly allowedTypes: SymbolTypes[];
 
-  constructor(geometry: GeometryType) {
-    this.geometry = geometry;
-    this.allowedTypes = ALLOWED_SYMBOL_TYPES[geometry];
+  constructor(mapLayer: MapLayer) {
+    this.geometry = mapLayer.geometryType;
+    this.allowedTypes = ALLOWED_SYMBOL_TYPES[mapLayer.geometryType];
   }
 
   symbolize(type: SymbolTypes) {

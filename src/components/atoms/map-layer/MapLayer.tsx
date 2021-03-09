@@ -22,29 +22,25 @@ const MapLayer: React.FC<IMapLayer> = ({ store }) => {
   }
 
   return (
-    <React.Fragment>
-      <div className={classes.container}>
-        <div className={joinClasses('control control-visibility')}>
-          <GrDown
-            className={joinClasses(
-              `collapse-symbol ${showSymbol ? 'collapse-symbol--expanded' : ''}`
-            )}
-            onClick={toggleShowSymbol}
-          />
-          <input
-            checked={store.visible}
-            type="checkbox"
-            onChange={store.toggleVisibility}
-          />
-        </div>
-        <div className={classes.control}>
-          <span className={classes['layer-name']}>
-            {store.name || store.id}
-          </span>
-          {showSymbol && <LayerSymbol />}
-        </div>
+    <div className={classes.container}>
+      <div className={joinClasses('control control-visibility')}>
+        <GrDown
+          className={joinClasses(
+            `collapse-symbol ${showSymbol ? 'collapse-symbol--expanded' : ''}`
+          )}
+          onClick={toggleShowSymbol}
+        />
+        <input
+          checked={store.visible}
+          type="checkbox"
+          onChange={store.toggleVisibility}
+        />
       </div>
-    </React.Fragment>
+      <div className={classes.control}>
+        <span className={classes['layer-name']}>{store.name || store.id}</span>
+        {showSymbol && <LayerSymbol />}
+      </div>
+    </div>
   );
 };
 
