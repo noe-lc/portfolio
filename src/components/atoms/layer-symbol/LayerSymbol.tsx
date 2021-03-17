@@ -1,6 +1,8 @@
-interface ILayerSymbol {}
+import MapLayer from '~/stores/mapLayer';
 
-interface Symbol {}
+interface ILayerSymbol {
+  store: MapLayer;
+}
 
 const LayerSymbol: React.FC<ILayerSymbol> = ({ store }) => {
   return <div>symbol</div>;
