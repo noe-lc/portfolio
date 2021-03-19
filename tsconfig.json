@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "importHelpers": true,
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -14,6 +15,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "noImplicitAny": false,
+    "downlevelIteration": true,
     "types": ["google.maps"],
     "baseUrl": ".",
     "paths": {
