@@ -1,7 +1,7 @@
 import { action, makeObservable, observable } from 'mobx';
 import { v4 as uuidv4 } from 'uuid';
 
-import getDefaultSymbol from '~/constants/defaultSymbols';
+import { getDefaultSymbol } from '~/constants/symbols';
 import { GeometryType } from '~/types/gis';
 
 export enum LayerZoomRange {

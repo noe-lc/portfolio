@@ -1,42 +1,9 @@
 import { makeObservable, observable } from 'mobx';
-import getDefaultSymbol from '~/constants/defaultSymbols';
+
+import { ALLOWED_SYMBOL_TYPES, getDefaultSymbol } from '~/constants/symbols';
 import { GeometryType } from '~/types/gis';
+import { SymbolDefinition, SymbolTypes } from '~/types/symbol';
 import MapLayer from './mapLayer';
-
-export enum SymbolTypes {
-  single = 'single',
-  nominal = 'nominal',
-  classified = 'classified',
-}
-
-interface Single {
-  symbol: PolygonSymbol;
-}
-
-interface Nominal {
-  field: string;
-  symbol?: [];
-}
-
-type MapSymbol = Single | Nominal;
-
-type SymbolDefinition = MapSymbol & {
-  type: SymbolTypes.single | SymbolTypes.nominal | SymbolTypes.classified;
-};
-
-export interface PolygonSymbol {
-  fillColor?: string;
-  fillOpacity?: number;
-  strokeColor?: string;
-  strokeOpacity?: number;
-  strokeWeight?: number;
-}
-
-const ALLOWED_SYMBOL_TYPES: Record<GeometryType, SymbolTypes[]> = {
-  Point: [SymbolTypes.nominal],
-  LineString: [SymbolTypes.nominal],
-  Polygon: [SymbolTypes.nominal],
-};
 
 class LayerSymbol {
   public definition: SymbolDefinition;
@@ -44,7 +11,7 @@ class LayerSymbol {
   readonly allowedTypes: SymbolTypes[];
 
   constructor(mapLayer: MapLayer, definition?: SymbolDefinition) {
-    makeObservable({
+    makeObservable(this, {
       definition: observable,
     });
 

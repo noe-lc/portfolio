@@ -1,11 +1,20 @@
-import MapLayer from '~/stores/mapLayer';
+import LayerSymbolStore from '~/stores/layerSymbol';
+import { SymbolTypes } from '~/types/symbol';
 
 interface ILayerSymbol {
-  store: MapLayer;
+  store: LayerSymbolStore;
 }
 
 const LayerSymbol: React.FC<ILayerSymbol> = ({ store }) => {
-  return <div>symbol</div>;
+  const definition = store.definition;
+  const { type } = definition;
+
+  switch (type) {
+    case SymbolTypes.single:
+      return <>'Single'</>;
+  }
+
+  return <div>Unsupported symbol type</div>;
 };
 
 export default LayerSymbol;
