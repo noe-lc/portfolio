@@ -4,18 +4,18 @@ export enum SymbolTypes {
   classified = 'classified',
 }
 
-interface Single {
+export interface Single {
   symbol: PolygonSymbol;
 }
 
-interface Nominal {
+export interface Nominal {
   field: string;
   symbol?: [];
 }
 
 type MapSymbol = Single | Nominal;
 
-export type SymbolDefinition = MapSymbol & {
+export type SymbolDefinition<T extends MapSymbol = MapSymbol> = T & {
   type: SymbolTypes.single | SymbolTypes.nominal | SymbolTypes.classified;
 };
 

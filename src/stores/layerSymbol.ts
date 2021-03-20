@@ -1,13 +1,13 @@
 import { makeObservable, observable } from 'mobx';
 
+import MapLayer from './mapLayer';
 import { ALLOWED_SYMBOL_TYPES, getDefaultSymbol } from '~/constants/symbols';
 import { GeometryType } from '~/types/gis';
-import { SymbolDefinition, SymbolTypes } from '~/types/symbol';
-import MapLayer from './mapLayer';
+import { SymbolDefinition, SymbolTypes, Single } from '~/types/symbol';
 
 class LayerSymbol {
   public definition: SymbolDefinition;
-  private geometryType: GeometryType;
+  public readonly geometryType: GeometryType;
   readonly allowedTypes: SymbolTypes[];
 
   constructor(mapLayer: MapLayer, definition?: SymbolDefinition) {
@@ -38,7 +38,7 @@ class LayerSymbol {
 
     switch (type) {
       case SymbolTypes.single:
-        this.definition = definition;
+        this.definition = definition as SymbolDefinition<Single>;
         break;
       case SymbolTypes.nominal:
         // TODO: create the nominal function
@@ -46,7 +46,7 @@ class LayerSymbol {
         this.definition = {
           type: SymbolTypes.nominal,
           field: 'jaja',
-          symbol: [],
+          // symbol: [],
         };
         break;
       default:

@@ -1,5 +1,8 @@
+import { observer } from 'mobx-react-lite';
+
 import LayerSymbolStore from '~/stores/layerSymbol';
-import { SymbolTypes } from '~/types/symbol';
+import { PolygonSymbol, SymbolTypes } from '~/types/symbol';
+import PolygonPatch from './PolygonPatch';
 
 interface ILayerSymbol {
   store: LayerSymbolStore;
@@ -11,10 +14,14 @@ const LayerSymbol: React.FC<ILayerSymbol> = ({ store }) => {
 
   switch (type) {
     case SymbolTypes.single:
-      return <>'Single'</>;
+      return (
+        <>
+          {<PolygonPatch symbol={definition.symbol as PolygonSymbol} />}Single
+        </>
+      );
   }
 
   return <div>Unsupported symbol type</div>;
 };
 
-export default LayerSymbol;
+export default observer(LayerSymbol);
