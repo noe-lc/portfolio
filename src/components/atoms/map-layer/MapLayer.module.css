@@ -19,10 +19,14 @@
   @apply block;
 }
 
-.collapse-symbol {
+.collapse {
   @apply transition-transform transform -rotate-90 cursor-pointer;
 }
 
-.collapse-symbol--expanded {
+.collapse--expanded {
   @apply transition-transform rotate-0;
+}
+
+.symbol {
+  @apply mt-1 ml-2;
 }

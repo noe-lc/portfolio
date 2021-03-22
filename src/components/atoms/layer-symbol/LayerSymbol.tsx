@@ -16,7 +16,7 @@ const LayerSymbol: React.FC<ILayerSymbol> = ({ store }) => {
     case SymbolTypes.single:
       return (
         <>
-          {<PolygonPatch symbol={definition.symbol as PolygonSymbol} />}Single
+          <PolygonPatch symbol={definition.symbol as PolygonSymbol} />
         </>
       );
   }

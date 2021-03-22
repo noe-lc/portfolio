@@ -18,6 +18,10 @@ class LayerSymbol {
     this.geometryType = mapLayer.geometryType;
     this.allowedTypes = ALLOWED_SYMBOL_TYPES[mapLayer.geometryType];
 
+    this.init(mapLayer, definition);
+  }
+
+  private init(mapLayer: MapLayer, definition?: SymbolDefinition) {
     if (definition) {
       this.symbolize(definition);
     } else {

@@ -1,6 +1,7 @@
 import { action, makeObservable, observable } from 'mobx';
 import { v4 as uuidv4 } from 'uuid';
 
+import LayerSymbol from '~/stores/layerSymbol';
 import { getDefaultSymbol } from '~/constants/symbols';
 import { GeometryType } from '~/types/gis';
 
@@ -40,6 +41,7 @@ class MapLayer {
   zoomRange: [number, number];
   visible: boolean;
   style: google.maps.Data.StyleOptions;
+  symbol: LayerSymbol;
 
   constructor(options: IFullLayerOptions) {
     makeObservable(this, {
@@ -48,15 +50,21 @@ class MapLayer {
       visible: observable,
       toggleVisibility: action.bound,
     });
+
     const layerOptions = { ...DEFAULT_OPTIONS, ...options };
 
-    this.data = new google.maps.Data(layerOptions);
     this.id = options.id || uuidv4();
     this.name = options.name;
-    this.zoomRange = layerOptions.zoomRange as ILayerOptions['zoomRange'];
+    this.data = new google.maps.Data(layerOptions);
     this.visible = layerOptions.visible;
+    this.zoomRange = layerOptions.zoomRange as ILayerOptions['zoomRange'];
+
     layerOptions.style.visible = this.visible;
 
+    this.init(layerOptions);
+  }
+
+  private init(layerOptions: IFullLayerOptions) {
     if (layerOptions.geometryType) {
       this.applyStyle({
         ...getDefaultSymbol(layerOptions.geometryType),
@@ -74,18 +82,18 @@ class MapLayer {
 
     this.data.loadGeoJson(url, options, features => {
       const [feature] = features;
-      const id = feature.getId();
       const geometryType = feature.getGeometry().getType() as GeometryType;
-      this.geometryType = geometryType;
 
-      if (!this.geometryType) {
-        this.applyStyle({
-          ...getDefaultSymbol(geometryType),
-          ...this.style,
-        });
-      }
+      this.geometryType = geometryType;
+      this.symbol = new LayerSymbol(this);
+
+      this.applyStyle({
+        ...getDefaultSymbol(geometryType),
+        ...this.style,
+      });
 
       if (!this.idProperty) {
+        const id = feature.getId();
         feature.forEachProperty((name, value) => {
           if (value === id) {
             this.idProperty = name;

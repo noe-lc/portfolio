@@ -13,12 +13,13 @@ export const DEFAULT_POLYGON_SYMBOL: PolygonSymbol = {
   fillOpacity: 0.25,
   strokeColor: '#000',
   strokeOpacity: 1,
-  strokeWeight: 2,
+  strokeWeight: 1,
 };
 
 export const getDefaultSymbol = (geometry: GeometryType) => {
   switch (geometry) {
     case 'Polygon':
+    case 'MultiPolygon':
       return DEFAULT_POLYGON_SYMBOL;
     default:
       return {};
