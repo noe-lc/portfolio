@@ -10,6 +10,8 @@ import { AiOutlinePushpin } from 'react-icons/ai';
 import joinClasses from '~/utils/joinClasses';
 import SidebarTabs, { OnTabSelect } from './SidebarTabs';
 import SidebarContent from './SidebarContent';
+import useDidMount from '~/hooks/useDidMount';
+
 import classes from './Sidebar.module.css';
 
 export type ISideBarValue = string | number;
@@ -21,6 +23,7 @@ interface ISidebar {
 }
 
 const Sidebar: React.FC<ISidebar> = props => {
+  const didMount = useDidMount();
   const sidebarEl = useRef<HTMLElement>(null);
   const expandTimeout = useRef<number>(null);
   const listenerCallbacks = useRef({
@@ -49,6 +52,8 @@ const Sidebar: React.FC<ISidebar> = props => {
       clearTimeout(expandTimeout.current);
       return;
     }
+
+    setPinned(false);
     setListeners(true);
   }
 
@@ -110,7 +115,7 @@ const Sidebar: React.FC<ISidebar> = props => {
   }
 
   useEffect(() => {
-    handleExpand(props.value);
+    didMount && handleExpand(props.value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.value]);
 

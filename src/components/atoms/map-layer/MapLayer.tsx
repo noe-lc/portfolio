@@ -4,6 +4,7 @@ import { GrDown } from 'react-icons/gr';
 
 import MapLayerStore from '~/stores/mapLayer';
 import LayerSymbol from '../layer-symbol';
+import { SymbolTypes } from '~/types/symbol';
 
 import useClasses from '~/hooks/useModuleClasses';
 
@@ -18,8 +19,28 @@ const MapLayer: React.FC<IMapLayer> = ({ store }) => {
 
   const [showSymbol, setShowSymbol] = useState(false);
 
+  const hasSingleSymbol = store.symbol.definition.type === SymbolTypes.single;
+
   function toggleShowSymbol() {
     setShowSymbol(!showSymbol);
+  }
+
+  if (store.symbol.definition.type === SymbolTypes.single) {
+    return (
+      <div className={classes.container}>
+        <div className={joinClasses('control control-visibility')}>
+          <input
+            checked={store.visible}
+            type="checkbox"
+            onChange={store.toggleVisibility}
+          />
+        </div>
+        <div className={classes['control--single']}>
+          <LayerSymbol store={store.symbol} />
+          <span>{store.name || store.id}</span>
+        </div>
+      </div>
+    );
   }
 
   return (

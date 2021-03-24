@@ -16,7 +16,7 @@ import LayerManager from '~components/organisms/layer-manager';
 
 function Gis<P extends LoadScriptReturn>(props: P) {
   const [mapStore, setMapStore] = useState<MapStore>(null);
-  const [activeTab, setActiveTab] = useState(null);
+  const [activeTab, setActiveTab] = useState<string | number>('first');
 
   const onMapSet = map => {
     const store = new MapStore(map);
@@ -37,14 +37,10 @@ function Gis<P extends LoadScriptReturn>(props: P) {
             onMapSet={onMapSet}
           />
         </div>
-        <Sidebar value={activeTab} onTabSelect={setActiveTab}>
+        <Sidebar expand value={activeTab} onTabSelect={setActiveTab}>
           <SidebarTabs>
             <SidebarTab
               value="first"
-              Icon={<IoLayersOutline className="inline" />}
-            />
-            <SidebarTab
-              value="second"
               Icon={<IoLayersOutline className="inline" />}
             />
           </SidebarTabs>
