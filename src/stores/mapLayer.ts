@@ -3,12 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import LayerSymbol from '~/stores/layerSymbol';
 import { getDefaultSymbol } from '~/constants/symbols';
-import { GeometryType } from '~/types/gis';
-
-export enum LayerZoomRange {
-  min = 0,
-  max = 22,
-}
+import { GeometryType, LayerZoomRange } from '~/types/gis';
 
 export interface ILayerOptions {
   id?: string;
@@ -42,12 +37,14 @@ class MapLayer {
   visible: boolean;
   style: google.maps.Data.StyleOptions;
   symbol: LayerSymbol;
+  readonly isLoaded = false;
 
   constructor(options: IFullLayerOptions) {
     makeObservable(this, {
       name: observable,
       zoomRange: observable,
       visible: observable,
+      isLoaded: observable,
       toggleVisibility: action.bound,
     });
 
@@ -76,7 +73,7 @@ class MapLayer {
   loadData(
     url: string,
     options?: google.maps.Data.GeoJsonOptions,
-    callback?: (features: google.maps.Data.Feature[]) => void
+    callback?: (features: google.maps.Data.Feature[], ...args) => void
   ) {
     this.idProperty = options?.idPropertyName;
 
@@ -101,6 +98,7 @@ class MapLayer {
         });
       }
 
+      this['isLoaded' as any] = true;
       callback && callback(features);
     });
   }

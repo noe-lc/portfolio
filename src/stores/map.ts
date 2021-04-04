@@ -13,12 +13,14 @@ const DEFAULT_OPTIONS = {
 };
 
 class Map {
-  public map: google.maps.Map;
-  public layers: MapLayer[];
+  map: google.maps.Map;
+  layers: MapLayer[];
+  areLayersLoaded = false;
 
   constructor(map: google.maps.Map, options?: IMapConfig) {
     makeObservable(this, {
       layers: observable.shallow,
+      areLayersLoaded: observable,
     });
 
     const storeOptions = { ...DEFAULT_OPTIONS, ...options };
@@ -65,6 +67,10 @@ class Map {
     const layer = this.layers[index];
     layer.data.setMap(null);
     this.layers.splice(index, 1);
+  }
+
+  setLayersLoaded(loaded: boolean) {
+    this.areLayersLoaded = loaded;
   }
 }
 

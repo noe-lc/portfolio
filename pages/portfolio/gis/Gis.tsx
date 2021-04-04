@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { useEffect, useState } from 'react';
 import { IoLayersOutline } from 'react-icons/io5';
 
 import MapStore from '~/stores/map';
@@ -19,12 +20,20 @@ function Gis<P extends LoadScriptReturn>(props: P) {
   const [activeTab, setActiveTab] = useState<string | number>('first');
 
   const onMapSet = map => {
-    const store = new MapStore(map);
-    const sample = store.addLayer('sample');
-    sample.loadData('/110m_countries.geojson');
-
-    setMapStore(store);
+    setMapStore(new MapStore(map));
   };
+
+  const onLayerLoaded = () => {
+    mapStore.setLayersLoaded(mapStore.layers.every(layer => layer.isLoaded));
+  };
+
+  useEffect(() => {
+    if (!mapStore) return;
+
+    const sample = mapStore.addLayer('sample');
+    sample.loadData('/110m_countries.geojson', {}, onLayerLoaded);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mapStore]);
 
   return (
     <div className="w-screen h-screen overflow-hidden">
@@ -46,7 +55,9 @@ function Gis<P extends LoadScriptReturn>(props: P) {
           </SidebarTabs>
           <SidebarContent>
             <SidebarPanel value="first">
-              {mapStore && <LayerManager layers={mapStore.layers || []} />}
+              {mapStore && mapStore.areLayersLoaded && (
+                <LayerManager layers={mapStore.layers || []} />
+              )}
             </SidebarPanel>
           </SidebarContent>
         </Sidebar>
@@ -58,4 +69,4 @@ function Gis<P extends LoadScriptReturn>(props: P) {
 export default withGoogleMaps({
   googleMapsApiKey: process.env.NEXT_PUBLIC_GM_API_KEY,
   preventGoogleFontsLoading: true,
-})(Gis);
+})(observer(Gis));

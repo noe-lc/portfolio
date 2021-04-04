@@ -25,7 +25,7 @@ const MapLayer: React.FC<IMapLayer> = ({ store }) => {
     setShowSymbol(!showSymbol);
   }
 
-  if (store.symbol.definition.type === SymbolTypes.single) {
+  if (hasSingleSymbol) {
     return (
       <div className={classes.container}>
         <div className={joinClasses('control control-visibility')}>
