@@ -1,0 +1,18 @@
+.backdrop {
+  @apply fixed 
+  flex 
+  w-full 
+  h-full 
+  top-0 
+  left-0 
+  items-center 
+  justify-center 
+  bg-gray-700 
+  opacity-50;
+}
+
+.wrapper {
+  @apply h-auto;
+  min-width: 600px;
+  max-height: 600px;
+}

@@ -19,6 +19,8 @@ function Gis<P extends LoadScriptReturn>(props: P) {
   const [mapStore, setMapStore] = useState<MapStore>(null);
   const [activeTab, setActiveTab] = useState<string | number>('first');
 
+  const areLayersLoaded = mapStore && mapStore.areLayersLoaded;
+
   const onMapSet = map => {
     setMapStore(new MapStore(map));
   };
@@ -55,8 +57,12 @@ function Gis<P extends LoadScriptReturn>(props: P) {
           </SidebarTabs>
           <SidebarContent>
             <SidebarPanel value="first">
-              {mapStore && mapStore.areLayersLoaded && (
+              {areLayersLoaded ? (
                 <LayerManager layers={mapStore.layers || []} />
+              ) : (
+                <div className="flex items-center justify-center h-full">
+                  Loading layers...
+                </div>
               )}
             </SidebarPanel>
           </SidebarContent>

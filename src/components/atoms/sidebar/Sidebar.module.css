@@ -28,14 +28,14 @@
 
 .topbar {
   @apply flex
-  justify-end
-  p-1
+  px-2
+  py-1
   rounded-tl-lg
   bg-gray-700;
 }
 
 .topbar-icon {
-  @apply text-xl text-gray-100 cursor-pointer;
+  @apply mr-1 text-xl  text-gray-100 cursor-pointer;
 }
 
 .topbar-icon--pinned {

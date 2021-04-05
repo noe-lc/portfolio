@@ -9,6 +9,7 @@ import { SymbolTypes } from '~/types/symbol';
 import useClasses from '~/hooks/useModuleClasses';
 
 import classes from './MapLayer.module.css';
+import Modal from '../modal';
 
 interface IMapLayer {
   store: MapLayerStore;
@@ -39,6 +40,7 @@ const MapLayer: React.FC<IMapLayer> = ({ store }) => {
           <LayerSymbol store={store.symbol} />
           <span>{store.name || store.id}</span>
         </div>
+        <Modal open />
       </div>
     );
   }

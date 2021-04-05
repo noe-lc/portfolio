@@ -2,10 +2,10 @@ import { PolygonSymbol } from '~/types/symbol';
 
 interface IPolygonPatch {
   symbol: PolygonSymbol;
+  changeSymbol: () => void;
 }
 
-const PolygonPatch: React.FC<IPolygonPatch> = ({ symbol }) => {
-  console.log('symbol :>> ', { ...symbol });
+const PolygonPatch: React.FC<IPolygonPatch> = ({ symbol, changeSymbol }) => {
   return (
     <svg width={25} height={20}>
       <rect
@@ -16,6 +16,8 @@ const PolygonPatch: React.FC<IPolygonPatch> = ({ symbol }) => {
         stroke={symbol.strokeColor}
         strokeWidth={symbol.strokeWeight}
         strokeOpacity={symbol.strokeOpacity}
+        className="cursor-pointer"
+        onDoubleClick={changeSymbol}
       />
     </svg>
   );

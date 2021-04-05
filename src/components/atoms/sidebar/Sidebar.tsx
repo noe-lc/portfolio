@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { AiOutlinePushpin } from 'react-icons/ai';
+import { AiOutlineClose, AiOutlinePushpin } from 'react-icons/ai';
 
 import joinClasses from '~/utils/joinClasses';
 import SidebarTabs, { OnTabSelect } from './SidebarTabs';
@@ -43,7 +43,7 @@ const Sidebar: React.FC<ISidebar> = props => {
     sidebarEl.current = e;
   }, []);
 
-  function onPin() {
+  function handlePinClick() {
     const shouldPin = !pinned;
 
     if (shouldPin) {
@@ -55,6 +55,13 @@ const Sidebar: React.FC<ISidebar> = props => {
 
     setPinned(false);
     setListeners(true);
+  }
+
+  function close() {
+    setExpand(false);
+    setPinned(false);
+    setListeners(false);
+    clearTimeout(expandTimeout.current);
   }
 
   function onTabSelect(value) {
@@ -129,13 +136,14 @@ const Sidebar: React.FC<ISidebar> = props => {
       >
         {tabs}
         <div className={classes.topbar}>
+          <AiOutlineClose className={classes['topbar-icon']} onClick={close} />
           <AiOutlinePushpin
             className={joinClasses(
               classes,
               pinned ? 'topbar-icon topbar-icon--pinned' : 'topbar-icon'
             )}
             title="Pin sidebar"
-            onClick={onPin}
+            onClick={handlePinClick}
           />
         </div>
         {content}

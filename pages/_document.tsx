@@ -19,9 +19,9 @@ class MyDocument extends Document {
         <Head>
           <meta property="og:title" content="NL" key="title" />
           <meta
+            key="title"
             property="og:description"
             content="Web developer and geoinformatics engineer. Mexico. Bilingual (spanish and english)"
-            key="title"
           />
           <meta
             name="keywords"

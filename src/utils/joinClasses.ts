@@ -6,7 +6,7 @@ const joinClasses = (
   let classNames = '';
   classList.split(' ').forEach(name => {
     className = classes[name];
-    classNames += className ? ` ${classes[name]}` : '';
+    classNames += className ? ` ${className}` : '';
   });
 
   return classNames;
