@@ -1,18 +1,32 @@
-.backdrop {
-  @apply fixed 
-  flex 
+.root {
+  @apply fixed
   w-full 
   h-full 
   top-0 
+  left-0;
+  z-index: 999;
+}
+
+.backdrop {
+  @apply w-full 
+  h-full 
+ bg-white
+  opacity-25;
+}
+
+.container {
+  @apply flex
+  absolute
+  w-full 
+  h-full
+  top-0 
   left-0 
   items-center 
-  justify-center 
-  bg-gray-700 
-  opacity-50;
+  justify-center;
 }
 
 .wrapper {
-  @apply h-auto;
+  @apply h-auto w-auto bg-white;
   min-width: 600px;
-  max-height: 600px;
+  min-height: 400px;
 }

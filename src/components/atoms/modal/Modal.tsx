@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import useDidMount from '~/hooks/useDidMount';
 
@@ -10,11 +10,16 @@ interface IModal {
   className?: string;
 }
 
-const Modal: React.FC<IModal> = ({ children, open = false, className }) => {
+const Modal: React.FC<IModal> = ({
+  children,
+  open = false,
+  className = '',
+}) => {
   const didMount = useDidMount();
 
   const [root] = useState(() => {
     const div = document.createElement('div');
+    div.classList.add(classes.root, className || 'modal__root');
     document.querySelector('body').appendChild(div);
     return div;
   });
@@ -29,9 +34,14 @@ const Modal: React.FC<IModal> = ({ children, open = false, className }) => {
   }, [open]);
 
   return ReactDOM.createPortal(
-    <div className={classes.backdrop}>
-      <div className={`${classes.wrapper} ${className}`}>{children}</div>
-    </div>,
+    <React.Fragment>
+      <div className={`${classes.backdrop} ${className}`} />
+      <div className={classes.container}>
+        <div className={classes.wrapper} role="dialog">
+          {children}
+        </div>
+      </div>
+    </React.Fragment>,
     root
   );
 };
