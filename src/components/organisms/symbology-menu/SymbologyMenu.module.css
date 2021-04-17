@@ -1,0 +1,15 @@
+.wrapper {
+  > * {
+    @apply py-1 px-3.5;
+  }
+}
+
+.container {
+}
+
+.classif-select {
+  border-style: none;
+  * {
+    border-style: none;
+  }
+}

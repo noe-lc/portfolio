@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { IoLayersOutline } from 'react-icons/io5';
+import SymbologyMenu from '~/components/organisms/symbology-menu';
 
 import MapStore from '~/stores/map';
 import Map from '~components/atoms/map';

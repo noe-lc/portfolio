@@ -1,4 +1,4 @@
-import { makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 
 import MapLayer, { IFullLayerOptions } from './mapLayer';
 
@@ -21,6 +21,7 @@ class Map {
     makeObservable(this, {
       layers: observable.shallow,
       areLayersLoaded: observable,
+      setLayersLoaded: action.bound,
     });
 
     const storeOptions = { ...DEFAULT_OPTIONS, ...options };
