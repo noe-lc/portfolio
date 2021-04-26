@@ -11,7 +11,7 @@ interface ISidebarTabs {
 
 const SidebarTabs: React.FC<ISidebarTabs> = props => {
   return (
-    <div className="absolute right-full top-10">
+    <div className="absolute right-full top-9">
       {React.Children.map(props.children as ReactElement, child => {
         return React.cloneElement(child, {
           ...child.props,

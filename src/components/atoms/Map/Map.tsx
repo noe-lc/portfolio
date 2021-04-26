@@ -1,4 +1,5 @@
 import React, { ReactNode, useCallback } from 'react';
+import withGoogleMaps from '~/components/hocs/with-google-maps';
 
 interface IMap {
   LoadingComponent: ReactNode;

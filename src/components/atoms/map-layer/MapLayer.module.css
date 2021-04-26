@@ -35,6 +35,10 @@
   @apply transition-transform rotate-0;
 }
 
+.symbol-container {
+  @apply inline;
+}
+
 .symbol {
   @apply mt-1 ml-2;
 }

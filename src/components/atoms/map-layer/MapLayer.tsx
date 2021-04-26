@@ -11,6 +11,7 @@ import useClasses from '~/hooks/useModuleClasses';
 import classes from './MapLayer.module.css';
 import Modal from '../modal';
 import SymbologyMenu from '~/components/organisms/symbology-menu';
+import { AiOutlineClose } from 'react-icons/ai';
 
 interface IMapLayer {
   store: MapLayerStore;
@@ -19,12 +20,21 @@ interface IMapLayer {
 const MapLayer: React.FC<IMapLayer> = ({ store }) => {
   const joinClasses = useClasses(classes);
 
-  const [showSymbol, setShowSymbol] = useState(false);
+  const [expandSymbol, setExpandSymbol] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const hasSingleSymbol = store.symbol.definition.type === SymbolTypes.single;
 
   function toggleShowSymbol() {
-    setShowSymbol(!showSymbol);
+    setExpandSymbol(!expandSymbol);
+  }
+
+  function openModal() {
+    setIsModalOpen(true);
+  }
+
+  function closeModal() {
+    setIsModalOpen(false);
   }
 
   if (hasSingleSymbol) {
@@ -38,12 +48,24 @@ const MapLayer: React.FC<IMapLayer> = ({ store }) => {
           />
         </div>
         <div className={classes['control--single']}>
-          <LayerSymbol store={store.symbol} />
+          <div
+            className={classes['symbol-container']}
+            onDoubleClick={openModal}
+          >
+            <LayerSymbol store={store.symbol} />
+          </div>
           <span>{store.name || store.id}</span>
         </div>
-        <SymbologyMenu />
-        <Modal>
-          <SymbologyMenu />
+        <Modal closeOnBackdropClick open={isModalOpen} onClose={closeModal}>
+          <div>
+            <div className="w-full px-2 py-1 flex justify-between items-center bg-gray-800 text-gray-100">
+              <span className="inline-block font-bold text-sm">Symbology</span>
+              <div>
+                <AiOutlineClose className="text-xl" />
+              </div>
+            </div>
+            <SymbologyMenu />
+          </div>
         </Modal>
       </div>
     );
@@ -54,7 +76,7 @@ const MapLayer: React.FC<IMapLayer> = ({ store }) => {
       <div className={joinClasses('control control-visibility')}>
         <GrDown
           className={joinClasses(
-            `collapse ${showSymbol ? 'collapse--expanded' : ''}`
+            `collapse ${expandSymbol ? 'collapse--expanded' : ''}`
           )}
           onClick={toggleShowSymbol}
         />
@@ -66,7 +88,7 @@ const MapLayer: React.FC<IMapLayer> = ({ store }) => {
       </div>
       <div className={classes.control}>
         <span className={classes['layer-name']}>{store.name || store.id}</span>
-        {showSymbol && (
+        {expandSymbol && (
           <div className={classes.symbol}>
             <LayerSymbol store={store.symbol} />
           </div>
