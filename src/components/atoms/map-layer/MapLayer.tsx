@@ -56,14 +56,19 @@ const MapLayer: React.FC<IMapLayer> = ({ store }) => {
           </div>
           <span>{store.name || store.id}</span>
         </div>
-        <Modal closeOnBackdropClick open={isModalOpen} onClose={closeModal}>
-          <div>
-            <div className="w-full px-2 py-1 flex justify-between items-center bg-gray-800 text-gray-100">
-              <span className="inline-block font-bold text-sm">Symbology</span>
-              <div>
-                <AiOutlineClose className="text-xl" />
-              </div>
+        <Modal open={isModalOpen}>
+          <div className="w-full px-2 py-1 flex justify-between items-center bg-gray-800 text-gray-100">
+            <span className="inline-block font-bold text-sm">
+              Symbology {`${store.name ? `- ${store.name}` : ''}`}
+            </span>
+            <div>
+              <AiOutlineClose
+                className="text-xl cursor-pointer"
+                onClick={closeModal}
+              />
             </div>
+          </div>
+          <div className="px-1 py-2 ">
             <SymbologyMenu />
           </div>
         </Modal>

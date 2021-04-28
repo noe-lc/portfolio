@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import useDidMount from '~/hooks/useDidMount';
 
@@ -10,7 +10,7 @@ type OnCloseEvent = React.MouseEvent<HTMLDivElement>;
 interface IModal {
   open?: boolean;
   className?: string;
-  onClose: (evt: OnCloseEvent) => void;
+  onClose?: (evt: OnCloseEvent) => void;
   closeOnBackdropClick?: boolean;
 }
 
@@ -21,27 +21,37 @@ const Modal: React.FC<IModal> = ({
   closeOnBackdropClick,
   onClose,
 }) => {
+  const backdropClick = useRef(false);
   const didMount = useDidMount();
 
   const [root] = useState(() => {
     const div = document.createElement('div');
+
     div.classList.add(classes.root, className || 'modal__root');
+    div.addEventListener('click', evt =>
+      close((evt as unknown) as OnCloseEvent)
+    );
+
     return div;
   });
 
   function close(evt: OnCloseEvent) {
-    console.log('clicked');
     evt.stopPropagation();
 
-    if (
-      (evt.target as HTMLDivElement).id.includes('dialog-backdrop') &&
-      closeOnBackdropClick
-    ) {
-      onClose(evt);
+    if (!backdropClick.current) {
       return;
     }
 
-    onClose(evt);
+    backdropClick.current = false;
+
+    if (closeOnBackdropClick && onClose) {
+      onClose(evt);
+      return;
+    }
+  }
+
+  function handleMouseDown(evt: OnCloseEvent) {
+    backdropClick.current = evt.target === evt.currentTarget;
   }
 
   useEffect(() => {
@@ -55,8 +65,11 @@ const Modal: React.FC<IModal> = ({
 
   return ReactDOM.createPortal(
     <React.Fragment>
-      <div id="dialog-backdrop" className={classes.backdrop} onClick={close} />
-      <div className={`${classes.container} ${className}`}>
+      <div className={classes.backdrop} />
+      <div
+        className={`${classes.container} ${className}`}
+        onMouseDown={handleMouseDown}
+      >
         <div className={classes.wrapper} role="dialog">
           {children}
         </div>
