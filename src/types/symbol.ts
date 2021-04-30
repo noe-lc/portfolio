@@ -1,7 +1,7 @@
 export enum SymbolTypes {
   single = 'single',
-  nominal = 'nominal',
   classified = 'classified',
+  ruleBased = 'ruleBased',
 }
 
 export interface Single {
@@ -16,7 +16,7 @@ export interface Nominal {
 type MapSymbol = Single | Nominal;
 
 export type SymbolDefinition<T extends MapSymbol = MapSymbol> = T & {
-  type: SymbolTypes.single | SymbolTypes.nominal | SymbolTypes.classified;
+  type: SymbolTypes.single | SymbolTypes.classified | SymbolTypes.classified;
 };
 
 export interface PolygonSymbol {

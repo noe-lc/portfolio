@@ -44,11 +44,11 @@ class LayerSymbol {
       case SymbolTypes.single:
         this.definition = definition as SymbolDefinition<Single>;
         break;
-      case SymbolTypes.nominal:
-        // TODO: create the nominal function
+      case SymbolTypes.classified:
+        // TODO: create the classified function
 
         this.definition = {
-          type: SymbolTypes.nominal,
+          type: SymbolTypes.classified,
           field: 'jaja',
           // symbol: [],
         };

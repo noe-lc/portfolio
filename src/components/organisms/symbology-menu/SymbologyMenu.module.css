@@ -7,9 +7,19 @@
 .container {
 }
 
-.classif-select {
-  border-style: none;
-  * {
-    border-style: none;
+.previewncontrols {
+  @apply flex w-full;
+  min-height: 250px;
+
+  > div {
+    @apply w-1/2;
   }
+}
+
+.preview-container {
+  @apply flex justify-center items-center;
+}
+
+.preview {
+  @apply w-20 h-20 border-gray-200 border-dashed border-2;
 }
