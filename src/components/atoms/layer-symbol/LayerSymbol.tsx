@@ -5,11 +5,11 @@ import { PolygonSymbol, SymbolTypes } from '~/types/symbol';
 import PolygonPatch from './PolygonPatch';
 
 interface ILayerSymbol {
-  store: LayerSymbolStore;
+  layerSymbolStore: LayerSymbolStore;
 }
 
-const LayerSymbol: React.FC<ILayerSymbol> = ({ store }) => {
-  const definition = store.definition;
+const LayerSymbol: React.FC<ILayerSymbol> = ({ layerSymbolStore }) => {
+  const definition = layerSymbolStore.definition;
   const { type } = definition;
 
   switch (type) {

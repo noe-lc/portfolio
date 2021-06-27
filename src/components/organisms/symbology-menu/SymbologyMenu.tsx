@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import Select from 'react-select';
-import Modal from '~/components/atoms/modal';
 
+import MapLayerStore from '~/stores/mapLayer';
+import SymbolPreview from '~/components/atoms/symbol-preview';
 import { SymbolTypes } from '~/types/symbol';
 
 import classes from './SymbologyMenu.module.css';
+
+interface ISymbologyMenu {
+  mapLayerStore: MapLayerStore
+}
 
 const OPTIONS = [
   { value: SymbolTypes.single, label: 'Single symbol' },
@@ -12,7 +17,7 @@ const OPTIONS = [
   { value: SymbolTypes.ruleBased, label: 'Rule based' },
 ];
 
-const SymbologyMenu: React.FC = () => {
+const SymbologyMenu: React.FC<ISymbologyMenu> = ({ mapLayerStore }) => {
   const [isColorOpen, setIsColorOpen] = useState(false);
 
   return (
@@ -24,7 +29,7 @@ const SymbologyMenu: React.FC = () => {
       <h5>Preview</h5>
       <div className={classes.previewncontrols}>
         <div className={classes['preview-container']}>
-          <div className={classes.preview} />
+        <SymbolPreview mapLayerStore={mapLayerStore}/>
         </div>
       </div>
     </div>

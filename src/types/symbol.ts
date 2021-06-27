@@ -4,20 +4,18 @@ export enum SymbolTypes {
   ruleBased = 'ruleBased',
 }
 
-export interface Single {
+export interface SingleSymbol {
+  type: SymbolTypes.single;
   symbol: PolygonSymbol;
 }
 
-export interface Nominal {
+export interface NominalSymbol {
+  type: SymbolTypes.classified;
   field: string;
   symbol?: [];
 }
 
-type MapSymbol = Single | Nominal;
-
-export type SymbolDefinition<T extends MapSymbol = MapSymbol> = T & {
-  type: SymbolTypes.single | SymbolTypes.classified | SymbolTypes.classified;
-};
+export type MapSymbol = SingleSymbol | NominalSymbol;
 
 export interface PolygonSymbol {
   fillColor?: string;

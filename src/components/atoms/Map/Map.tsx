@@ -1,5 +1,4 @@
 import React, { ReactNode, useCallback } from 'react';
-import withGoogleMaps from '~/components/hocs/with-google-maps';
 
 interface IMap {
   LoadingComponent: ReactNode;
@@ -44,7 +43,6 @@ const Map: React.FC<IMap> = ({
   }
 
   if (!isLibraryLoaded) {
-    return <React.Fragment>{LoadingComponent}</React.Fragment>;
   }
 
   return <div ref={setMap} id="map" className="w-full h-full" />;

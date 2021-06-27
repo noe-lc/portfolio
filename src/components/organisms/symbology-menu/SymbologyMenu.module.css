@@ -19,7 +19,3 @@
 .preview-container {
   @apply flex justify-center items-center;
 }
-
-.preview {
-  @apply w-20 h-20 border-gray-200 border-dashed border-2;
-}

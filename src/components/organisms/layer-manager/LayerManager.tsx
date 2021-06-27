@@ -18,7 +18,7 @@ const LayerManager: React.FC<ILayerManager> = props => {
         <ul>
           {props.layers.map(layer => (
             <li key={layer.id}>
-              <MapLayer store={layer} />
+              <MapLayer mapLayerStore={layer} />
             </li>
           ))}
         </ul>

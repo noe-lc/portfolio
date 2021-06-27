@@ -6,7 +6,7 @@ import Select from 'react-select';
 import useStateObject from '~/hooks/useStateObject';
 
 import MapStore from '~/stores/map';
-import Map from '~components/atoms/map';
+import Map from '~/components/atoms/map';
 import Sidebar, {
   SidebarTabs,
   SidebarContent,
