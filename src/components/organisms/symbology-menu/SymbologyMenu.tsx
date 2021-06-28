@@ -2,13 +2,13 @@ import { useState } from 'react';
 import Select from 'react-select';
 
 import MapLayerStore from '~/stores/mapLayer';
-import SymbolPreview from '~/components/atoms/symbol-preview';
+import LayerSymbolRouter from '~/components/atoms/layer-symbol/LayerSymbolRouter';
 import { SymbolTypes } from '~/types/symbol';
 
 import classes from './SymbologyMenu.module.css';
 
 interface ISymbologyMenu {
-  mapLayerStore: MapLayerStore
+  mapLayerStore: MapLayerStore;
 }
 
 const OPTIONS = [
@@ -29,7 +29,9 @@ const SymbologyMenu: React.FC<ISymbologyMenu> = ({ mapLayerStore }) => {
       <h5>Preview</h5>
       <div className={classes.previewncontrols}>
         <div className={classes['preview-container']}>
-        <SymbolPreview mapLayerStore={mapLayerStore}/>
+          <LayerSymbolRouter
+            symbolDefinition={mapLayerStore.symbol.definition}
+          />
         </div>
       </div>
     </div>

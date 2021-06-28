@@ -22,8 +22,6 @@ const MapLayer: React.FC<IMapLayer> = ({ mapLayerStore }) => {
   const [expandSymbol, setExpandSymbol] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const hasSingleSymbol = mapLayerStore.symbol.definition.type === SymbolTypes.single;
-
   function toggleShowSymbol() {
     setExpandSymbol(!expandSymbol);
   }
@@ -36,7 +34,7 @@ const MapLayer: React.FC<IMapLayer> = ({ mapLayerStore }) => {
     setIsModalOpen(false);
   }
 
-  if (hasSingleSymbol) {
+  if (mapLayerStore.symbol.definition.type === SymbolTypes.single) {
     return (
       <div className={classes.container}>
         <div className={joinClasses('control control-visibility')}>
@@ -51,14 +49,15 @@ const MapLayer: React.FC<IMapLayer> = ({ mapLayerStore }) => {
             className={classes['symbol-container']}
             onDoubleClick={openModal}
           >
-            <LayerSymbol layerSymbolStore={mapLayerStore.symbol} />
+            <LayerSymbol symbolStyle={mapLayerStore.symbol.definition.style} />
           </div>
           <span>{mapLayerStore.name || mapLayerStore.id}</span>
         </div>
         <Modal open={isModalOpen}>
           <div className="w-full px-2 py-1 flex justify-between items-center bg-gray-800 text-gray-100">
             <span className="inline-block font-bold text-sm">
-              Symbology {`${mapLayerStore.name ? `- ${mapLayerStore.name}` : ''}`}
+              Symbology{' '}
+              {`${mapLayerStore.name ? `- ${mapLayerStore.name}` : ''}`}
             </span>
             <div>
               <AiOutlineClose
@@ -68,7 +67,7 @@ const MapLayer: React.FC<IMapLayer> = ({ mapLayerStore }) => {
             </div>
           </div>
           <div className="px-1 py-2 ">
-            <SymbologyMenu mapLayerStore={mapLayerStore}/>
+            <SymbologyMenu mapLayerStore={mapLayerStore} />
           </div>
         </Modal>
       </div>
@@ -91,10 +90,12 @@ const MapLayer: React.FC<IMapLayer> = ({ mapLayerStore }) => {
         />
       </div>
       <div className={classes.control}>
-        <span className={classes['layer-name']}>{mapLayerStore.name || mapLayerStore.id}</span>
+        <span className={classes['layer-name']}>
+          {mapLayerStore.name || mapLayerStore.id}
+        </span>
         {expandSymbol && (
           <div className={classes.symbol}>
-            <LayerSymbol layerSymbolStore={mapLayerStore.symbol} />
+            <LayerSymbol symbolStyle={mapLayerStore.symbol.definition.style} />
           </div>
         )}
       </div>

@@ -41,9 +41,10 @@ class LayerSymbol {
       return;
     }
 
-    switch (type) {
+    switch (definition.type) {
       case SymbolTypes.single:
         this.definition = definition;
+        this.definition.style.geometryType = this.geometryType;
         break;
       case SymbolTypes.classified:
         // TODO: create the classified function

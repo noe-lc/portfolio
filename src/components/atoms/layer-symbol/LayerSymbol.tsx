@@ -1,28 +1,63 @@
-import { observer } from 'mobx-react-lite';
+import React from 'react';
 
-import LayerSymbolStore from '~/stores/layerSymbol';
-import { PolygonStyle, SymbolTypes } from '~/types/symbol';
-import PolygonPatch from './PolygonPatch';
+import { PolygonStyle, SymbolStyle } from '~/types/symbol';
+import useClasses from '~/hooks/useModuleClasses';
 
-interface ILayerSymbol {
-  layerSymbolStore: LayerSymbolStore;
+import classes from './LayerSymbol.module.css';
+
+interface IPolygonSymbolPreview {
+  style: PolygonStyle;
+  onDoubleClick?: (evt: React.MouseEvent) => void;
 }
 
-const LayerSymbol: React.FC<ILayerSymbol> = ({ layerSymbolStore }) => {
-  const definition = layerSymbolStore.definition;
-  const { type } = definition;
+const PolygonSymbol: React.FC<IPolygonSymbolPreview> = ({
+  style,
+  onDoubleClick,
+}) => {
+  const joinClasses = useClasses(classes);
 
-  switch (type) {
-    case SymbolTypes.single:
-      return (
-        <PolygonPatch
-          symbol={definition.style as PolygonStyle}
-          changeSymbol={() => undefined}
-        />
-      );
+  function handleOnDoubleClick(evt: React.MouseEvent) {
+    if (onDoubleClick) onDoubleClick(evt);
   }
 
-  return <div>Unsupported symbol type</div>;
+  if (Object.values(style).every(value => !value)) {
+    <svg className="c-polygon-sym">
+      <rect width="100%" height="100%" onDoubleClick={handleOnDoubleClick} />
+    </svg>;
+  }
+
+  return (
+    <svg className={joinClasses('c-polygon-sym polygon-sym', true)}>
+      <rect
+        width="100%"
+        height="100%"
+        fill={style.fillColor}
+        fillOpacity={style.fillOpacity}
+        stroke={style.strokeColor}
+        strokeWidth={style.strokeWeight}
+        strokeOpacity={style.strokeOpacity}
+        className="cursor-pointer"
+        onDoubleClick={handleOnDoubleClick}
+      />
+    </svg>
+  );
 };
 
-export default observer(LayerSymbol);
+const LayerSymbol: React.FC<{ symbolStyle: SymbolStyle }> = ({
+  symbolStyle,
+}) => {
+  switch (symbolStyle.geometryType) {
+    case 'Point':
+      return <span>Point</span>;
+    case 'LineString':
+      return <span>Point</span>;
+    case 'Polygon':
+      return <PolygonSymbol style={symbolStyle} />;
+    case 'MultiPolygon':
+      return <PolygonSymbol style={symbolStyle} />;
+    default:
+      return <span>Default single symbol preview</span>;
+  }
+};
+
+export default LayerSymbol;

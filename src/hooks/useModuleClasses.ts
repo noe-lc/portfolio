@@ -3,8 +3,8 @@ import joinClasses from '~/utils/joinClasses';
 
 const useModuleClasses = (classes: Record<string, string>) => {
   const joinModuleClasses = useCallback(
-    function (classList: string) {
-      return joinClasses(classes, classList);
+    function (classList: string, includeNonModule?: boolean) {
+      return joinClasses(classes, classList, includeNonModule);
     },
     [classes]
   );

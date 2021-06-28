@@ -1,0 +1,10 @@
+.polygon-sym {
+  @apply w-6 h-5;
+}
+
+.polygon-sym-stroke {
+  @apply w-20 h-20 bg-transparent border-gray-200 border-dashed border-2;
+}
+
+.polygon-sym-pre-fill {
+}

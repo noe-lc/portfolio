@@ -1,5 +1,3 @@
-import { GeometryType } from './gis';
-
 export enum SymbolTypes {
   single = 'single',
   classified = 'classified',
@@ -9,17 +7,17 @@ export enum SymbolTypes {
 export type PointStyle = Pick<
   google.maps.Data.StyleOptions,
   'cursor' | 'icon' | 'shape' | 'title'
-> & { geometry: 'Point' };
+> & { geometryType: 'Point' };
 
 export type LineStyle = Pick<
   google.maps.Data.StyleOptions,
   'strokeColor' | 'strokeOpacity' | 'strokeWeight'
-> & { geometry: 'LineString' };
+> & { geometryType: 'LineString' };
 
 export type PolygonStyle = Pick<
   google.maps.Data.StyleOptions,
   'fillColor' | 'fillOpacity' | 'strokeColor' | 'strokeOpacity' | 'strokeWeight'
-> & { geometry: 'Polygon' | 'MultiPolygon' };
+> & { geometryType: 'Polygon' | 'MultiPolygon' };
 
 export type SymbolStyle = PointStyle | LineStyle | PolygonStyle;
 
@@ -28,10 +26,10 @@ export interface SingleSymbol {
   style: SymbolStyle;
 }
 
-export interface NominalSymbol {
+export interface ClassifiedSymbol {
   type: SymbolTypes.classified;
   field: string;
   style?: [];
 }
 
-export type Symbol = SingleSymbol | NominalSymbol;
+export type Symbol = SingleSymbol | ClassifiedSymbol;
