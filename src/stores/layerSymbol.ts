@@ -1,16 +1,16 @@
 import { makeObservable, observable } from 'mobx';
 
 import MapLayer from './mapLayer';
-import { ALLOWED_SYMBOL_TYPES, getDefaultSymbol } from '~/constants/symbols';
+import { ALLOWED_SYMBOL_TYPES, getDefaultStyle } from '~/constants/symbols';
 import { GeometryType } from '~/types/gis';
-import { MapSymbol, SymbolTypes } from '~/types/symbol';
+import { Symbol, SymbolTypes } from '~/types/symbol';
 
-class LayerSymbol{
-  public definition: MapSymbol;
+class LayerSymbol {
+  public definition: Symbol;
   public readonly geometryType: GeometryType;
   readonly allowedTypes: SymbolTypes[];
 
-  constructor(mapLayer: MapLayer, definition?: MapSymbol) {
+  constructor(mapLayer: MapLayer, definition?: Symbol) {
     makeObservable(this, {
       definition: observable,
     });
@@ -21,16 +21,16 @@ class LayerSymbol{
     this.init(mapLayer, definition);
   }
 
-  private init(mapLayer: MapLayer, definition?: MapSymbol) {
+  private init(mapLayer: MapLayer, definition?: Symbol) {
     if (definition) {
       this.symbolize(definition);
     } else {
-      const symbol = getDefaultSymbol(this.geometryType);
-      this.symbolize({ type: SymbolTypes.single, symbol });
+      const style = getDefaultStyle(this.geometryType);
+      this.symbolize({ type: SymbolTypes.single, style });
     }
   }
 
-  symbolize(definition: MapSymbol) {
+  symbolize(definition: Symbol) {
     const { type } = definition;
 
     if (!this.allowedTypes.includes(type)) {
@@ -43,7 +43,7 @@ class LayerSymbol{
 
     switch (type) {
       case SymbolTypes.single:
-        this.definition = definition as MapSymbol;
+        this.definition = definition;
         break;
       case SymbolTypes.classified:
         // TODO: create the classified function

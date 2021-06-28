@@ -2,7 +2,7 @@ import { action, makeObservable, observable } from 'mobx';
 import { v4 as uuidv4 } from 'uuid';
 
 import LayerSymbol from '~/stores/layerSymbol';
-import { getDefaultSymbol } from '~/constants/symbols';
+import { getDefaultStyle } from '~/constants/symbols';
 import { GeometryType, LayerZoomRange } from '~/types/gis';
 
 export interface ILayerOptions {
@@ -57,14 +57,14 @@ class MapLayer {
     this.zoomRange = layerOptions.zoomRange as ILayerOptions['zoomRange'];
 
     layerOptions.style.visible = this.visible;
-
+    
     this.init(layerOptions);
   }
 
   private init(layerOptions: IFullLayerOptions) {
     if (layerOptions.geometryType) {
       this.applyStyle({
-        ...getDefaultSymbol(layerOptions.geometryType),
+        ...getDefaultStyle(layerOptions.geometryType),
         ...layerOptions.style,
       });
     }
@@ -85,7 +85,7 @@ class MapLayer {
       this.symbol = new LayerSymbol(this);
 
       this.applyStyle({
-        ...getDefaultSymbol(geometryType),
+        ...getDefaultStyle(geometryType),
         ...this.style,
       });
 

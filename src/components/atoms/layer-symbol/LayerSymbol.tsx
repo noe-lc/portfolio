@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 
 import LayerSymbolStore from '~/stores/layerSymbol';
-import { PolygonSymbol, SymbolTypes } from '~/types/symbol';
+import { PolygonStyle, SymbolTypes } from '~/types/symbol';
 import PolygonPatch from './PolygonPatch';
 
 interface ILayerSymbol {
@@ -16,7 +16,7 @@ const LayerSymbol: React.FC<ILayerSymbol> = ({ layerSymbolStore }) => {
     case SymbolTypes.single:
       return (
         <PolygonPatch
-          symbol={definition.symbol as PolygonSymbol}
+          symbol={definition.style as PolygonStyle}
           changeSymbol={() => undefined}
         />
       );

@@ -8,7 +8,7 @@ export const ALLOWED_SYMBOL_TYPES: Record<GeometryType, SymbolTypes[]> = {
   MultiPolygon: [SymbolTypes.single, SymbolTypes.classified],
 };
 
-export const DEFAULT_POLYGON_SYMBOL: PolygonSymbol = {
+export const DEFAULT_POLYGON_STYLE: PolygonSymbol = {
   fillColor: '#000',
   fillOpacity: 0.25,
   strokeColor: '#000',
@@ -16,11 +16,11 @@ export const DEFAULT_POLYGON_SYMBOL: PolygonSymbol = {
   strokeWeight: 1,
 };
 
-export const getDefaultSymbol = (geometry: GeometryType) => {
+export const getDefaultStyle = (geometry: GeometryType) => {
   switch (geometry) {
     case 'Polygon':
     case 'MultiPolygon':
-      return DEFAULT_POLYGON_SYMBOL;
+      return DEFAULT_POLYGON_STYLE;
     default:
       return {};
   }

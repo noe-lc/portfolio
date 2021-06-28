@@ -1,26 +1,37 @@
+import { GeometryType } from './gis';
+
 export enum SymbolTypes {
   single = 'single',
   classified = 'classified',
   ruleBased = 'ruleBased',
 }
 
+export type PointStyle = Pick<
+  google.maps.Data.StyleOptions,
+  'cursor' | 'icon' | 'shape' | 'title'
+> & { geometry: 'Point' };
+
+export type LineStyle = Pick<
+  google.maps.Data.StyleOptions,
+  'strokeColor' | 'strokeOpacity' | 'strokeWeight'
+> & { geometry: 'LineString' };
+
+export type PolygonStyle = Pick<
+  google.maps.Data.StyleOptions,
+  'fillColor' | 'fillOpacity' | 'strokeColor' | 'strokeOpacity' | 'strokeWeight'
+> & { geometry: 'Polygon' | 'MultiPolygon' };
+
+export type SymbolStyle = PointStyle | LineStyle | PolygonStyle;
+
 export interface SingleSymbol {
   type: SymbolTypes.single;
-  symbol: PolygonSymbol;
+  style: SymbolStyle;
 }
 
 export interface NominalSymbol {
   type: SymbolTypes.classified;
   field: string;
-  symbol?: [];
+  style?: [];
 }
 
-export type MapSymbol = SingleSymbol | NominalSymbol;
-
-export interface PolygonSymbol {
-  fillColor?: string;
-  fillOpacity?: number;
-  strokeColor?: string;
-  strokeOpacity?: number;
-  strokeWeight?: number;
-}
+export type Symbol = SingleSymbol | NominalSymbol;
