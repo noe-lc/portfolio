@@ -1,4 +1,4 @@
-export type ValuesOf<T extends unknown[]> = T[number];
+import { ValuesOf } from '~/types/common';
 
 interface GetUniqueValues {
   <T>(input: T[]): T[];
