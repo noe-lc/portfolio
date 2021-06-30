@@ -10,6 +10,7 @@ import classes from './SymbologyMenu.module.css';
 
 interface ISymbologyMenu {
   mapLayerStore: MapLayerStore;
+  className?: string;
 }
 
 const OPTIONS = [
@@ -44,9 +45,9 @@ const SymbologyMenu: React.FC<ISymbologyMenu> = ({ mapLayerStore }) => {
       {/*<Modal open={isColorOpen}>
 
         </Modal>*/}
-      <h5>Preview</h5>
       <div className={classes.previewncontrols}>
         <div className={classes['preview-container']}>
+          <h5 className={classes['preview-title']}>Preview</h5>
           <LayerSymbolRouter
             symbolDefinition={mapLayerStore.symbol.definition}
           />

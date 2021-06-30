@@ -36,7 +36,6 @@ const PolygonSymbol: React.FC<IPolygonSymbolPreview> = ({
         stroke={style.strokeColor}
         strokeWidth={style.strokeWeight}
         strokeOpacity={style.strokeOpacity}
-        className="cursor-pointer"
         onDoubleClick={handleOnDoubleClick}
       />
     </svg>

@@ -37,6 +37,10 @@
 
 .symbol-container {
   @apply inline;
+
+  > svg {
+    @apply cursor-pointer;
+  }
 }
 
 .symbol {

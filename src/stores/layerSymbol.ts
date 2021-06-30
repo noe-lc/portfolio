@@ -32,7 +32,6 @@ class LayerSymbol {
 
   symbolize(definition: Symbol) {
     const { type } = definition;
-
     if (!this.allowedTypes.includes(type)) {
       console.error(
         `Symbol \`${type}\` not compatible with ${this.geometryType}`

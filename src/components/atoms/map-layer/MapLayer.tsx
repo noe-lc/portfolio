@@ -66,7 +66,7 @@ const MapLayer: React.FC<IMapLayer> = ({ mapLayerStore }) => {
               />
             </div>
           </div>
-          <div className="px-1 py-2 ">
+          <div className="px-2 py-3">
             <SymbologyMenu mapLayerStore={mapLayerStore} />
           </div>
         </Modal>

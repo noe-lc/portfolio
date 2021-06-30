@@ -10,7 +10,7 @@ const joinClasses = (
     classNames += className ? ` ${className}` : '';
   });
 
-  return classNames;
+  return classNames.trimStart();
 };
 
 export default joinClasses;

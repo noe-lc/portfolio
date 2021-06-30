@@ -52,6 +52,14 @@ function Gis() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapStore]);
 
+  if (libraryState.loadError) {
+    return (
+      <h3 className="w-full p-4 text-lg text-center">
+        Oops! We could not load your map.
+      </h3>
+    );
+  }
+
   return (
     <div className="w-screen h-screen overflow-hidden">
       <LoadScriptNext

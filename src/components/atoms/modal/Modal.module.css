@@ -28,7 +28,5 @@
 
 .wrapper {
   @apply h-auto w-auto shadow bg-white;
-  /*pointer-events: all*/
   min-width: 600px;
-  min-height: 400px;
 }
