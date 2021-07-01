@@ -23,7 +23,10 @@ const getOption = (value: SymbolTypes): ValuesOf<typeof OPTIONS> => {
   return OPTIONS.find(option => option.value === value);
 };
 
-const SymbologyMenu: React.FC<ISymbologyMenu> = ({ mapLayerStore }) => {
+const SymbologyMenu: React.FC<ISymbologyMenu> = ({
+  mapLayerStore,
+  className = '',
+}) => {
   const [isColorOpen, setIsColorOpen] = useState(false);
   const [internalSymbologyType, setInternalSymbologyType] = useState(() =>
     getOption(mapLayerStore.symbol.definition.type)
@@ -34,7 +37,7 @@ const SymbologyMenu: React.FC<ISymbologyMenu> = ({ mapLayerStore }) => {
   }
 
   return (
-    <div className={classes.wrapper}>
+    <div className={`classes.wrapper ${className}`}>
       <Select
         instanceId="sm-001"
         classNamePrefix="prefix"

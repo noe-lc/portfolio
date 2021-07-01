@@ -39,8 +39,8 @@ const MapLayer: React.FC<IMapLayer> = ({ mapLayerStore }) => {
       <div className={classes.container}>
         <div className={joinClasses('control control-visibility')}>
           <input
-            checked={mapLayerStore.visible}
             type="checkbox"
+            checked={mapLayerStore.visible}
             onChange={mapLayerStore.toggleVisibility}
           />
         </div>
@@ -49,26 +49,32 @@ const MapLayer: React.FC<IMapLayer> = ({ mapLayerStore }) => {
             className={classes['symbol-container']}
             onDoubleClick={openModal}
           >
-            <LayerSymbol symbolStyle={mapLayerStore.symbol.definition.style} />
+            <LayerSymbol
+              symbolStyle={mapLayerStore.symbol.definition.style}
+              className="cursor-pointer"
+            />
           </div>
           <span>{mapLayerStore.name || mapLayerStore.id}</span>
         </div>
         <Modal open={isModalOpen}>
-          <div className="w-full px-2 py-1 flex justify-between items-center bg-gray-800 text-gray-100">
-            <span className="inline-block font-bold text-sm">
+          <div className={classes['symbol-modal-titlebar']}>
+            <span className={classes['symbol-modal-title']}>
               Symbology{' '}
               {`${mapLayerStore.name ? `- ${mapLayerStore.name}` : ''}`}
             </span>
             <div>
               <AiOutlineClose
-                className="text-xl cursor-pointer"
+                className={classes['symbol-modal-close']}
                 onClick={closeModal}
               />
             </div>
           </div>
-          <div className="px-2 py-3">
-            <SymbologyMenu mapLayerStore={mapLayerStore} />
-          </div>
+          <SymbologyMenu
+            mapLayerStore={mapLayerStore}
+            className={joinClasses(
+              'symbol-modal-symbologymenu symbol-modal-symbologymenu--single'
+            )}
+          />
         </Modal>
       </div>
     );

@@ -5,13 +5,20 @@ import useClasses from '~/hooks/useModuleClasses';
 
 import classes from './LayerSymbol.module.css';
 
-interface IPolygonSymbolPreview {
+interface ILayerSymbol {
+  symbolStyle: SymbolStyle;
+  className?: string;
+}
+
+interface IPolygonSymbol {
   style: PolygonStyle;
+  className?: string;
   onDoubleClick?: (evt: React.MouseEvent) => void;
 }
 
-const PolygonSymbol: React.FC<IPolygonSymbolPreview> = ({
+const PolygonSymbol: React.FC<IPolygonSymbol> = ({
   style,
+  className,
   onDoubleClick,
 }) => {
   const joinClasses = useClasses(classes);
@@ -21,13 +28,15 @@ const PolygonSymbol: React.FC<IPolygonSymbolPreview> = ({
   }
 
   if (Object.values(style).every(value => !value)) {
-    <svg className="c-polygon-sym">
+    <svg className={`c-polygon-sym ${className}`}>
       <rect width="100%" height="100%" onDoubleClick={handleOnDoubleClick} />
     </svg>;
   }
 
   return (
-    <svg className={joinClasses('c-polygon-sym polygon-sym', true)}>
+    <svg
+      className={joinClasses(`c-polygon-sym polygon-sym ${className}`, true)}
+    >
       <rect
         width="100%"
         height="100%"
@@ -42,7 +51,8 @@ const PolygonSymbol: React.FC<IPolygonSymbolPreview> = ({
   );
 };
 
-const LayerSymbol: React.FC<{ symbolStyle: SymbolStyle }> = ({
+const LayerSymbol: React.FC<ILayerSymbol> = ({
+  className = '',
   symbolStyle,
 }) => {
   switch (symbolStyle.geometryType) {
@@ -51,9 +61,9 @@ const LayerSymbol: React.FC<{ symbolStyle: SymbolStyle }> = ({
     case 'LineString':
       return <span>Point</span>;
     case 'Polygon':
-      return <PolygonSymbol style={symbolStyle} />;
+      return <PolygonSymbol style={symbolStyle} className={className} />;
     case 'MultiPolygon':
-      return <PolygonSymbol style={symbolStyle} />;
+      return <PolygonSymbol style={symbolStyle} className={className} />;
     default:
       return <span>Default single symbol preview</span>;
   }

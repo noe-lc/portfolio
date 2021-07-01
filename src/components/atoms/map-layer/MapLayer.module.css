@@ -29,24 +29,42 @@
 
 .collapse {
   @apply transition-transform transform -rotate-90 cursor-pointer;
-}
 
-.collapse--expanded {
-  @apply transition-transform rotate-0;
-}
-
-.symbol-container {
-  @apply inline;
-
-  > svg {
-    @apply cursor-pointer;
+  &--expanded {
+    @apply transition-transform rotate-0;
   }
 }
 
 .symbol {
   @apply mt-1 ml-2;
+
+  &-container {
+    @apply inline;
+  }
+
+  &--single {
+    @apply inline-block mr-2;
+  }
 }
 
-.symbol--single {
-  @apply inline-block mr-2;
+.symbol-modal {
+  &-titlebar {
+    @apply w-full px-2 py-1 flex justify-between items-center bg-gray-800 text-gray-100;
+  }
+
+  &-title {
+    @apply inline-block font-bold text-sm;
+  }
+
+  &-close {
+    @apply text-xl cursor-pointer;
+  }
+
+  &-symbologymenu {
+    @apply px-2 py-3;
+  }
+
+  &-symbologymenu--single svg[class~='c-polygon-sym'] {
+    @apply w-10 h-10;
+  }
 }
