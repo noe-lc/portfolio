@@ -1,0 +1,16 @@
+.container {
+}
+
+.tabs {
+  @apply relative flex -top-3 left-3;
+}
+
+.tab {
+  @apply bg-gray-100 mr-1.5 px-4 rounded cursor-pointer;
+  padding-top: 2px;
+  padding-bottom: 2px;
+
+  &--active {
+    @apply bg-gray-300;
+  }
+}

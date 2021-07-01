@@ -2,11 +2,13 @@ import { useState } from 'react';
 import Select, { OptionTypeBase } from 'react-select';
 
 import MapLayerStore from '~/stores/mapLayer';
-import LayerSymbolRouter from '~/components/atoms/layer-symbol/LayerSymbolRouter';
+import { LayerSymbolRouter } from '~/components/atoms/layer-symbol';
+import Tabs from '~/components/atoms/tabs';
 import { SymbolTypes } from '~/types/symbol';
 import { ValuesOf } from '~/types/common';
 
 import classes from './SymbologyMenu.module.css';
+import getSymbologyTabsItems from './symbologyTabsItems';
 
 interface ISymbologyMenu {
   mapLayerStore: MapLayerStore;
@@ -55,6 +57,7 @@ const SymbologyMenu: React.FC<ISymbologyMenu> = ({
             symbolDefinition={mapLayerStore.symbol.definition}
           />
         </div>
+        <Tabs items={getSymbologyTabsItems(mapLayerStore.geometryType)} />
       </div>
     </div>
   );
