@@ -1,18 +1,23 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Select, { OptionTypeBase } from 'react-select';
 
 import MapLayerStore from '~/stores/mapLayer';
 import { LayerSymbolRouter } from '~/components/atoms/layer-symbol';
 import Tabs from '~/components/atoms/tabs';
+import getSymbologyTabsItems, { SymbologyTabItem } from './SymbologyTabItems';
+import { GeometryType } from '~/types/gis';
 import { SymbolTypes } from '~/types/symbol';
 import { ValuesOf } from '~/types/common';
 
 import classes from './SymbologyMenu.module.css';
-import getSymbologyTabsItems from './symbologyTabsItems';
 
 interface ISymbologyMenu {
   mapLayerStore: MapLayerStore;
   className?: string;
+}
+
+interface SymbologyTab {
+  type: SymbologyTabItem;
 }
 
 const OPTIONS = [
@@ -33,6 +38,11 @@ const SymbologyMenu: React.FC<ISymbologyMenu> = ({
   const [internalSymbologyType, setInternalSymbologyType] = useState(() =>
     getOption(mapLayerStore.symbol.definition.type)
   );
+
+  function renderSelectedTabItem(item: SymbologyTabItem) {
+    const { Component } = item;
+    return <Component type={item.id} />;
+  }
 
   function handleChange(option: OptionTypeBase) {
     setInternalSymbologyType(getOption(option.value));
@@ -57,7 +67,9 @@ const SymbologyMenu: React.FC<ISymbologyMenu> = ({
             symbolDefinition={mapLayerStore.symbol.definition}
           />
         </div>
-        <Tabs items={getSymbologyTabsItems(mapLayerStore.geometryType)} />
+        <Tabs items={getSymbologyTabsItems(mapLayerStore.geometryType)}>
+          {renderSelectedTabItem}
+        </Tabs>
       </div>
     </div>
   );

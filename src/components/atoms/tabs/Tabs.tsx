@@ -7,16 +7,21 @@ import classes from './Tabs.module.css';
 export interface TabItem {
   id: string;
   label: string;
-  content: ReactNode;
 }
 
 interface ITabs {
   items: Array<TabItem>;
   initialActive?: TabItem['id'];
+  children?: (TabItem) => ReactNode;
   className?: string;
 }
 
-const Tabs: React.FC<ITabs> = ({ items, initialActive, className = '' }) => {
+const Tabs: React.FC<ITabs> = ({
+  items,
+  initialActive,
+  children,
+  className = '',
+}) => {
   const [activeItem, setActiveItem] = useState(() => {
     if (initialActive) {
       return items.find(item => item.id === initialActive) || items[0];
@@ -47,6 +52,7 @@ const Tabs: React.FC<ITabs> = ({ items, initialActive, className = '' }) => {
           </li>
         ))}
       </ul>
+      {children && children(activeItem)}
     </div>
   );
 };
