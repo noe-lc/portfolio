@@ -16,7 +16,7 @@ interface IPolygonSymbol {
   onDoubleClick?: (evt: React.MouseEvent) => void;
 }
 
-const PolygonSymbol: React.FC<IPolygonSymbol> = ({
+export const PolygonSymbol: React.FC<IPolygonSymbol> = ({
   style,
   className,
   onDoubleClick,

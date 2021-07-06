@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import Select, { OptionTypeBase } from 'react-select';
 
 import MapLayerStore from '~/stores/mapLayer';
-import { LayerSymbolRouter } from '~/components/atoms/layer-symbol';
-import Tabs from '~/components/atoms/tabs';
-import getSymbologyTabsItems, { SymbologyTabItem } from './SymbologyTabItems';
-import { GeometryType } from '~/types/gis';
+import PolygonSymbologyMenu from './PolygonSymbologyMenu';
 import { SymbolTypes } from '~/types/symbol';
 import { ValuesOf } from '~/types/common';
 
@@ -14,10 +11,6 @@ import classes from './SymbologyMenu.module.css';
 interface ISymbologyMenu {
   mapLayerStore: MapLayerStore;
   className?: string;
-}
-
-interface SymbologyTab {
-  type: SymbologyTabItem;
 }
 
 const OPTIONS = [
@@ -39,13 +32,22 @@ const SymbologyMenu: React.FC<ISymbologyMenu> = ({
     getOption(mapLayerStore.symbol.definition.type)
   );
 
-  function renderSelectedTabItem(item: SymbologyTabItem) {
-    const { Component } = item;
-    return <Component type={item.id} />;
-  }
-
   function handleChange(option: OptionTypeBase) {
     setInternalSymbologyType(getOption(option.value));
+  }
+
+  function renderMenuContent() {
+    switch (mapLayerStore.geometryType) {
+      case 'Point':
+        return 'point menu';
+      case 'LineString':
+        return 'linestring menu';
+      case 'Polygon':
+      case 'MultiPolygon':
+        return <PolygonSymbologyMenu mapLayerStore={mapLayerStore} />;
+      default:
+        return 'default menu';
+    }
   }
 
   return (
@@ -57,20 +59,7 @@ const SymbologyMenu: React.FC<ISymbologyMenu> = ({
         value={internalSymbologyType}
         onChange={handleChange}
       />
-      {/*<Modal open={isColorOpen}>
-
-        </Modal>*/}
-      <div className={classes.previewncontrols}>
-        <div className={classes['preview-container']}>
-          <h5 className={classes['preview-title']}>Preview</h5>
-          <LayerSymbolRouter
-            symbolDefinition={mapLayerStore.symbol.definition}
-          />
-        </div>
-        <Tabs items={getSymbologyTabsItems(mapLayerStore.geometryType)}>
-          {renderSelectedTabItem}
-        </Tabs>
-      </div>
+      {renderMenuContent()}
     </div>
   );
 };

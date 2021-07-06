@@ -29,7 +29,7 @@ export interface SingleSymbol {
 export interface ClassifiedSymbol {
   type: SymbolTypes.classified;
   field: string;
-  style?: [];
+  style: [];
 }
 
 export type Symbol = SingleSymbol | ClassifiedSymbol;
