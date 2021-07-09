@@ -1,34 +1,28 @@
 import MapLayerStore from '~/stores/mapLayer';
 import Tabs from '~/components/atoms/tabs/Tabs';
-import ColorPicker from './CustomColorPicker';
 import { PolygonSymbol } from '~/components/atoms/layer-symbol/LayerSymbol';
 import { PolygonStyle, SymbolTypes } from '~/types/symbol';
 import { TabItem } from '~/components/atoms/tabs/Tabs';
 
 import pClasses from './SymbologyMenu.module.css';
 
-export type PolygonTab = 'stroke' | 'fill';
-type PolygonTabItem = TabItem & { type: PolygonTab };
+export type PointTab = 'cursor';
+type PointTabItem = TabItem & { type: PointTab };
 
-interface IPolygonSymbologyMenu {
+interface IPointSymbologyMenu {
   mapLayerStore: MapLayerStore;
   className?: string;
 }
 
-const polygonTabItems: Array<PolygonTabItem> = [
+const pointTabItems: Array<PointTabItem> = [
   {
-    id: 'polygon-stroke',
-    type: 'stroke',
-    label: 'Stroke',
-  },
-  {
-    id: 'polygon-fill',
-    type: 'fill',
-    label: 'Fill',
+    id: 'point-cursor',
+    type: 'cursor',
+    label: 'Cursor',
   },
 ];
 
-const PolygonSymbologyMenu: React.FC<IPolygonSymbologyMenu> = ({
+const PointSymbologyMenu: React.FC<IPointSymbologyMenu> = ({
   mapLayerStore,
 }) => {
   const symbolDef = mapLayerStore.symbol.definition;
@@ -45,12 +39,9 @@ const PolygonSymbologyMenu: React.FC<IPolygonSymbologyMenu> = ({
     }
   }
 
-  function renderItem(item: PolygonTabItem) {
-    if (item.type === 'stroke') {
-      return <ColorPicker />;
-    }
-    if (item.type === 'fill') {
-      return <>'Fill'</>;
+  function renderItem(item: PointTabItem) {
+    if (item.type === 'cursor') {
+      return <>'Stroke'</>;
     }
   }
 
@@ -60,11 +51,9 @@ const PolygonSymbologyMenu: React.FC<IPolygonSymbologyMenu> = ({
         <h5 className={pClasses['preview-title']}>Preview</h5>
         {renderSymbol()}
       </div>
-      <div className={pClasses['preview-controls']}>
-        <Tabs items={polygonTabItems}>{renderItem}</Tabs>
-      </div>
+      <Tabs items={pointTabItems}>{renderItem}</Tabs>
     </div>
   );
 };
 
-export default PolygonSymbologyMenu;
+export default PointSymbologyMenu;

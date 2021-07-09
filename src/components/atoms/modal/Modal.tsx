@@ -28,9 +28,7 @@ const Modal: React.FC<IModal> = ({
     const div = document.createElement('div');
 
     div.classList.add(classes.root, className || 'modal__root');
-    div.addEventListener('click', evt =>
-      close((evt as unknown) as OnCloseEvent)
-    );
+    div.addEventListener('click', evt => close(evt as unknown as OnCloseEvent));
 
     return div;
   });
@@ -51,7 +49,12 @@ const Modal: React.FC<IModal> = ({
   }
 
   function handleMouseDown(evt: OnCloseEvent) {
+    console.log('evt :>> ', evt);
     backdropClick.current = evt.target === evt.currentTarget;
+  }
+
+  function handleWrapperMouseDown(evt: OnCloseEvent) {
+    evt.stopPropagation();
   }
 
   useEffect(() => {
@@ -70,7 +73,11 @@ const Modal: React.FC<IModal> = ({
         className={`${classes.container} ${className}`}
         onMouseDown={handleMouseDown}
       >
-        <div className={classes.wrapper} role="dialog">
+        <div
+          className={classes.wrapper}
+          role="dialog"
+          onMouseDown={handleWrapperMouseDown}
+        >
           {children}
         </div>
       </div>

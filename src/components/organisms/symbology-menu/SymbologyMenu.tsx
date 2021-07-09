@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Select, { OptionTypeBase } from 'react-select';
 
 import MapLayerStore from '~/stores/mapLayer';
+import PointSymbologyMenu from './PointSymbologyMenu';
+import LineStringSymbologyMenu from './LineStringSymbologyMenu';
 import PolygonSymbologyMenu from './PolygonSymbologyMenu';
 import { SymbolTypes } from '~/types/symbol';
 import { ValuesOf } from '~/types/common';
@@ -39,9 +41,9 @@ const SymbologyMenu: React.FC<ISymbologyMenu> = ({
   function renderMenuContent() {
     switch (mapLayerStore.geometryType) {
       case 'Point':
-        return 'point menu';
+        return <PointSymbologyMenu mapLayerStore={mapLayerStore} />;
       case 'LineString':
-        return 'linestring menu';
+        return <LineStringSymbologyMenu mapLayerStore={mapLayerStore} />;
       case 'Polygon':
       case 'MultiPolygon':
         return <PolygonSymbologyMenu mapLayerStore={mapLayerStore} />;
